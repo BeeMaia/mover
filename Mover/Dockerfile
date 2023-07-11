@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Mover/Mover.csproj", "Mover/"]
+COPY ["Mover.csproj", "Mover/"]
 RUN dotnet restore "Mover/Mover.csproj"
 COPY . .
 WORKDIR "/src/Mover"
