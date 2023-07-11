@@ -2,12 +2,12 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     tags: ["v*.*.*"]
     paths-ignore:
       - "README.md"
   workflow_dispatch:
-  
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -36,11 +36,8 @@ jobs:
       containerImage-mover-api: ${{ steps.image-tag.outputs.image-mover-service }}
     strategy:
       matrix:
-        services:
-          [
-            { "appName": "mover-service", "directory": "./src/Mover" }
-          ]
-      steps:
+        services: [{ "appName": "mover-service", "directory": "./src/Mover" }]
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       # Login against a Docker registry except on PR
