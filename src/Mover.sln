@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mover", "Mover\Mover.csproj", "{3EC01527-1B5B-4650-80AE-A8259EBC0AEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{61888031-48D9-404D-A7E0-C7E3EE40289F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{A208E23F-E295-48D0-8304-A614E28358BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{3645434F-96DD-406C-97B2-25260068F9E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mover.Modules.FitDecoder", "modules\Mover.Modules.FitDecoder\Mover.Modules.FitDecoder.csproj", "{EB67214D-BB75-4A1B-BE6B-9DC47132F193}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mover.Shared", "Mover.Shared\Mover.Shared.csproj", "{352FEF1E-8E1F-42E4-A212-EAD798654CBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mover.Modules.FitDecoder.Shared", "modules\Mover.Modules.FitDecoder.Shared\Mover.Modules.FitDecoder.Shared.csproj", "{D1408A9F-65D9-4B2F-9127-73007F348A54}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "local", "local", "{52A7DD73-70C9-41B1-AE76-9E9002C5B057}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\components\local\mover-fitblob.yaml = dapr\components\local\mover-fitblob.yaml
+		dapr\components\local\mover-gpxblob.yaml = dapr\components\local\mover-gpxblob.yaml
+		dapr\components\local\mover-pubsub.yaml = dapr\components\local\mover-pubsub.yaml
+		dapr\components\local\mover-queue.yaml = dapr\components\local\mover-queue.yaml
+		dapr\components\local\mover-secrets.yaml = dapr\components\local\mover-secrets.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure", "azure", "{30598E04-C779-4BF7-8F2A-B78AE34C1193}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\components\azure\mover-fitblob.yaml = dapr\components\azure\mover-fitblob.yaml
+		dapr\components\azure\mover-gpxblob.yaml = dapr\components\azure\mover-gpxblob.yaml
+		dapr\components\azure\mover-pubsub.yaml = dapr\components\azure\mover-pubsub.yaml
+		dapr\components\azure\mover-queue.yaml = dapr\components\azure\mover-queue.yaml
+		dapr\components\azure\mover-secrets.yaml = dapr\components\azure\mover-secrets.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{EB187E68-79B9-41EB-9503-FD84F0A88BE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure", "azure", "{FCDF0503-B265-4325-92F7-EB0419F8AC78}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\azure\deploy.bicep = deploy\azure\deploy.bicep
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EC01527-1B5B-4650-80AE-A8259EBC0AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EC01527-1B5B-4650-80AE-A8259EBC0AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EC01527-1B5B-4650-80AE-A8259EBC0AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EC01527-1B5B-4650-80AE-A8259EBC0AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB67214D-BB75-4A1B-BE6B-9DC47132F193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB67214D-BB75-4A1B-BE6B-9DC47132F193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB67214D-BB75-4A1B-BE6B-9DC47132F193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB67214D-BB75-4A1B-BE6B-9DC47132F193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{352FEF1E-8E1F-42E4-A212-EAD798654CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{352FEF1E-8E1F-42E4-A212-EAD798654CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{352FEF1E-8E1F-42E4-A212-EAD798654CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{352FEF1E-8E1F-42E4-A212-EAD798654CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1408A9F-65D9-4B2F-9127-73007F348A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1408A9F-65D9-4B2F-9127-73007F348A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1408A9F-65D9-4B2F-9127-73007F348A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1408A9F-65D9-4B2F-9127-73007F348A54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A208E23F-E295-48D0-8304-A614E28358BA} = {61888031-48D9-404D-A7E0-C7E3EE40289F}
+		{EB67214D-BB75-4A1B-BE6B-9DC47132F193} = {3645434F-96DD-406C-97B2-25260068F9E5}
+		{D1408A9F-65D9-4B2F-9127-73007F348A54} = {3645434F-96DD-406C-97B2-25260068F9E5}
+		{52A7DD73-70C9-41B1-AE76-9E9002C5B057} = {A208E23F-E295-48D0-8304-A614E28358BA}
+		{30598E04-C779-4BF7-8F2A-B78AE34C1193} = {A208E23F-E295-48D0-8304-A614E28358BA}
+		{FCDF0503-B265-4325-92F7-EB0419F8AC78} = {EB187E68-79B9-41EB-9503-FD84F0A88BE5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CAD614E-1BB0-4739-B611-85F4B04B884E}
+	EndGlobalSection
+EndGlobal
