@@ -36,7 +36,7 @@ jobs:
       containerImage-mover-api: ${{ steps.image-tag.outputs.image-mover-service }}
     strategy:
       matrix:
-        services: [{ "appName": "mover-service", "directory": "./src/Mover" }]
+        services: [{ "appName": "mover-service", "directory": "./Mover" }]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
