@@ -1,0 +1,21 @@
+name: 1. Setup Container registry
+on:
+  workflow_call:
+jobs:
+  bicep-provision-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy bicep
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az group create -g ${{ secrets.RESOURCE_GROUP }} -l swedencentral
+            az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/setup-registry.bicep

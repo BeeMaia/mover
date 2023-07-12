@@ -3,7 +3,7 @@ param location string = resourceGroup().location
 param tags object = {}
 
 param containerAppsEnvironmentName string = ''
-param containerRegistryName string = ''
+
 param logAnalyticsWorkspaceName string = ''
 param applicationInsightsName string = ''
 param daprEnabled bool = false
@@ -20,15 +20,4 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
   }
 }
 
-module containerRegistry 'container-registry.bicep' = {
-  name: 'cr-${name}'
-  params: {
-    name: containerRegistryName
-    location: location
-    tags: tags
-  }
-}
-
 output environmentName string = containerAppsEnvironment.outputs.name
-output registryLoginServer string = containerRegistry.outputs.loginServer
-output registryName string = containerRegistry.outputs.name

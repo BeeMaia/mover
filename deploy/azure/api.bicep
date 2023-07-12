@@ -7,7 +7,7 @@ param imageName string
 param serviceName string 
 param managedIdentityName string
 
-module app 'container-app.bicep' = {
+module app './reusable/container-app.bicep' = {
   name: '${serviceName}-container-app-module'
   params: {
     name: name

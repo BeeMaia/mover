@@ -1,5 +1,4 @@
 param containerAppsEnvName string
-param containerRegistryName string
 param location string
 param logAnalyticsWorkspaceName string
 param applicationInsightsName string
@@ -9,9 +8,8 @@ param daprEnabled bool = false
 module containerApps 'container-apps.bicep' = {
   name: 'container-apps'
   params: {
-    name: 'app'
+    name: 'mover'
     containerAppsEnvironmentName: containerAppsEnvName
-    containerRegistryName: containerRegistryName
     location: location
     logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
     applicationInsightsName: applicationInsightsName
@@ -20,5 +18,3 @@ module containerApps 'container-apps.bicep' = {
 }
 
 output environmentName string = containerApps.outputs.environmentName
-output registryLoginServer string = containerApps.outputs.registryLoginServer
-output registryName string = containerApps.outputs.registryName

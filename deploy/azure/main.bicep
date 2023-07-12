@@ -6,6 +6,8 @@ param location string = resourceGroup().location
 @description('Environment for all resources')
 param environment string = 'dev'
 
+param registryName string
+
 @description('The image name for the api service')
 param apiImageName string 
 
@@ -16,7 +18,7 @@ var abbrs = loadJsonContent('./abbreviations.json')
 var tags = {}
 
 // Monitor application with Azure Monitor
-module monitoring 'monitoring.bicep' = {
+module monitoring './reusable/monitoring.bicep' = {
   name: 'monitoring'
   params: {
     location: location
@@ -28,11 +30,10 @@ module monitoring 'monitoring.bicep' = {
 }
 
 // Shared App Env
-module appEnv 'app-env.bicep' = {
+module appEnv './reusable/app-env.bicep' = {
   name: '${deployment().name}-app-env'
   params: {
     containerAppsEnvName: '${abbrs.appManagedEnvironments}${resourceToken}'
-    containerRegistryName: '${abbrs.containerRegistryRegistries}${resourceToken}'
     location: location
     logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
@@ -41,7 +42,7 @@ module appEnv 'app-env.bicep' = {
 }
 
 // Setup managed identity
-module security 'security.bicep' = {
+module security './reusable/security.bicep' = {
   name: 'security'
   params: {
     managedIdentityName: '${abbrs.managedIdentityUserAssignedIdentities}${resourceToken}'
@@ -49,7 +50,7 @@ module security 'security.bicep' = {
   }
 }
 
-module storage 'storage-account.bicep' = {
+module storage './reusable/storage-account.bicep' = {
   name: 'storage'
   params: {
     name: '${abbrs.storageStorageAccounts}${resourceToken}'
@@ -66,7 +67,7 @@ module storage 'storage-account.bicep' = {
   }
 }
 
-module serviceBus 'servicebus.bicep' = {
+module serviceBus './reusable/servicebus.bicep' = {
   name: 'serviceBus'
   params:{
     name:'${abbrs.serviceBusNamespaces}${resourceToken}'
@@ -93,7 +94,7 @@ module api 'api.bicep' = {
     location: location
     imageName: apiImageName
     containerAppsEnvironmentName: appEnv.outputs.environmentName
-    containerRegistryName: appEnv.outputs.registryName
+    containerRegistryName: registryName
     serviceName: apiServiceName
     managedIdentityName: security.outputs.managedIdentityName
   }
