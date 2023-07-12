@@ -1,0 +1,25 @@
+name: 3. Setup environment
+on:
+  workflow_dispatch:
+jobs:
+  bicep-provision-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy bicep
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set bicep.use_binary_from_path=false
+            az bicep install
+            az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/azure/main.bicep
+              -p \
+                apiImageName='mover-api' \
+                registryName=${{ secrets.REGISTRY_LOGINURL }}
