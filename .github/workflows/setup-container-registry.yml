@@ -1,6 +1,6 @@
 name: 1. Setup Container registry
 on:
-  workflow_call:
+  workflow_dispatch:
 jobs:
   bicep-provision-environment:
     runs-on: ubuntu-latest
