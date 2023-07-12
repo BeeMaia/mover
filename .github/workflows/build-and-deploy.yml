@@ -6,9 +6,6 @@ on:
     paths:
       - src/**
     tags: ["v*.*.*"]
-    paths-ignore:
-      - "README.md"
-      - "setup-container-registry.yml"
   workflow_dispatch:
 
 env:
