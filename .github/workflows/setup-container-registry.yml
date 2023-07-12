@@ -17,7 +17,9 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az group create -g ${{ secrets.RESOURCE_GROUP }} -l swedencentral
+            if [ $(az group exists --name ${{ secrets.RESOURCE_GROUP }}) = false ]; then
+              az group create -g ${{ secrets.RESOURCE_GROUP }} -l swedencentral
+            fi
             az config set bicep.use_binary_from_path=false
             az bicep install
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/azure/setup-registry.bicep
