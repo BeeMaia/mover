@@ -18,4 +18,6 @@ jobs:
         with:
           inlineScript: |
             az group create -g ${{ secrets.RESOURCE_GROUP }} -l swedencentral
+            az config set bicep.use_binary_from_path=false
+            az bicep install
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/setup-registry.bicep
