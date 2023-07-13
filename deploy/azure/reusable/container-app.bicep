@@ -5,6 +5,9 @@ param tags object = {}
 param containerAppsEnvironmentName string = ''
 param containerName string = 'main'
 param containerRegistryName string = ''
+param containerRegistryUserName string
+@secure()
+param containerRegistryPassword string
 param env array = []
 param external bool = true
 param imageName string
@@ -46,7 +49,7 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
       secrets: [
         {
           name: 'registry-password'
-          value: containerRegistry.listCredentials().passwords[0].value
+          value: containerRegistryPassword
         }
       ]
       dapr: {
@@ -58,7 +61,7 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
       registries: [
         {
           server: '${containerRegistry.name}.azurecr.io'
-          username: containerRegistry.name
+          username: containerRegistryUserName
           passwordSecretRef: 'registry-password'
         }
       ]
