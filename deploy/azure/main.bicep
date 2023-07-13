@@ -69,10 +69,22 @@ module storage './reusable/storage-account.bicep' = {
 
 module serviceBus './reusable/servicebus.bicep' = {
   name: 'serviceBus'
-  params:{
+  params: {
     name:'${abbrs.serviceBusNamespaces}${resourceToken}'
     location:location
     managedIdentityName: security.outputs.managedIdentityName
+  }
+}
+
+module eventgrid 'eventgrid.bicep' ={
+  name: 'eventgrid'
+  params: {
+    location: location
+    eventSubName: '${abbrs.eventGridEventSubscriptions}FitCreated'
+    storageAccountName: storage.outputs.name
+    serviceBusName: serviceBus.outputs.serviceBusName
+    serviceBusQueueName: 'FitCreated'
+    systemTopicName: '${abbrs.eventGridDomainsTopics}${resourceToken}'
   }
 }
 
