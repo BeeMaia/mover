@@ -2,6 +2,34 @@
 
 The entire solution is configured with [GitHub Actions](https://github.com/features/actions) and [Bicep](https://docs.microsoft.com/azure/azure-resource-manager/bicep/overview) for CI/CD
 
+## Pre
+
+Create a custom role for allow to assign roles during deployments
+
+```
+az role definition create --role-definition '{
+"Name": "Contributor Assign Roles",
+"Id": "1a200ac6-5a49-4198-9403-0af86342bd35",
+"IsCustom": true,
+"Description": "Grants full access to manage all resources, allow you to assign roles in Azure RBAC but not delete roles in Azure RBAC manage assignments in Azure Blueprints, or share image galleries.",
+"Actions": [
+""
+],
+"NotActions": [
+"Microsoft.Authorization/*/Delete",
+"Microsoft.Authorization/elevateAccess/Action",
+"Microsoft.Blueprint/blueprintAssignments/write",
+"Microsoft.Blueprint/blueprintAssignments/delete",
+"Microsoft.Compute/galleries/share/action"
+],
+"DataActions": [],
+"NotDataActions": [],
+"AssignableScopes": [
+"/subscriptions/TYPE_YOUR_SUBSCRIPTION_ID_HERE"
+]
+}'
+```
+
 1. Create the following required [encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) for the sample
 
 | Name              | Value                                                                                                                                                                                                                                                                                                   |

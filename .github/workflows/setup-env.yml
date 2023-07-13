@@ -22,4 +22,4 @@ jobs:
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/azure/main.bicep \
               -p \
                 apiImageName='mover-api:main' \
-                registryName=${{ secrets.REGISTRY_LOGINURL }}
+                registryName='crmoverdev'
