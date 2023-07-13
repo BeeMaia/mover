@@ -73,7 +73,7 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
     template: {
       containers: [
         {
-          image: imageName
+          image: '${containerRegistry.name}.azurecr.io/${imageName}'
           name: containerName
           env: env
           resources: {
