@@ -7,7 +7,9 @@ param location string = resourceGroup().location
 param environment string = 'dev'
 
 param registryName string
+
 param registryUserName string
+
 @secure()
 param registryPassword string
 

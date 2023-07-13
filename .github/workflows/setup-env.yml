@@ -23,5 +23,5 @@ jobs:
               -p \
                 apiImageName='mover-api:main' \
                 registryName='crmoverdev' \
-                registryUserName = ${{ secrets.REGISTRY_USERNAME }} \
-                registryPassword = ${{ secrets.REGISTRY_PASSWORD }}
+                registryUserName='${{ secrets.REGISTRY_USERNAME }}' \
+                registryPassword='${{ secrets.REGISTRY_PASSWORD }}'
