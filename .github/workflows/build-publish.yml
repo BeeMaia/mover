@@ -3,7 +3,7 @@ on:
   push:
     branches: ["main"]
     paths:
-      - src/**
+      - src/webapi/**
     tags: ["v*.*.*"]
   workflow_dispatch:
 
@@ -39,7 +39,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./src
+          context: ./src/webapi
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
