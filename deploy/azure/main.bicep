@@ -8,11 +8,6 @@ param environment string = 'dev'
 
 param registryName string
 
-param registryUserName string
-
-@secure()
-param registryPassword string
-
 @description('The image name for the api service')
 param apiImageName string 
 
@@ -112,8 +107,6 @@ module api 'api.bicep' = {
     imageName: apiImageName
     containerAppsEnvironmentName: appEnv.outputs.environmentName
     containerRegistryName: registryName
-    containerRegistryUserName: registryUserName
-    containerRegistryPassword: registryPassword
     serviceName: apiServiceName
     managedIdentityName: security.outputs.managedIdentityName
   }

@@ -3,9 +3,6 @@ param location string = resourceGroup().location
 
 param containerAppsEnvironmentName string
 param containerRegistryName string
-param containerRegistryUserName string
-@secure()
-param containerRegistryPassword string
 param imageName string 
 param serviceName string 
 param managedIdentityName string
@@ -18,8 +15,6 @@ module app './reusable/container-app.bicep' = {
     tags: {}
     containerAppsEnvironmentName: containerAppsEnvironmentName
     containerRegistryName: containerRegistryName
-    containerRegistryUserName: containerRegistryUserName
-    containerRegistryPassword: containerRegistryPassword
     containerCpuCoreCount: '1.0'
     containerMemory: '2.0Gi'
     imageName: !empty(imageName) ? imageName : 'nginx:latest'

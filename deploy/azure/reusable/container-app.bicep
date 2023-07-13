@@ -5,9 +5,6 @@ param tags object = {}
 param containerAppsEnvironmentName string = ''
 param containerName string = 'main'
 param containerRegistryName string = ''
-param containerRegistryUserName string
-@secure()
-param containerRegistryPassword string
 param env array = []
 param external bool = true
 param imageName string
@@ -25,6 +22,20 @@ param containerCpuCoreCount string = '0.5'
 
 @description('Memory allocated to a single container instance, e.g. 1Gi')
 param containerMemory string = '1.0Gi'
+
+resource acrPullRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
+  name: '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+}
+
+// roleDefinitionId is the ID found here for AcrPull: https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#acrpull
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup().id, acrPullRoleDefinition.id)
+  properties: {
+    principalId: managedIdentity.properties.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: acrPullRoleDefinition.id
+  }
+}
 
 resource app 'Microsoft.App/containerApps@2022-10-01' = {
   name: name
@@ -46,12 +57,6 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
         targetPort: targetPort
         transport: 'auto'
       }
-      secrets: [
-        {
-          name: 'registry-password'
-          value: containerRegistryPassword
-        }
-      ]
       dapr: {
         enabled: daprEnabled
         appId: daprApp
@@ -61,8 +66,7 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
       registries: [
         {
           server: '${containerRegistry.name}.azurecr.io'
-          username: containerRegistryUserName
-          passwordSecretRef: 'registry-password'
+          identity: managedIdentity.id
         }
       ]
     }
