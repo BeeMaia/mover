@@ -23,7 +23,7 @@ param containerCpuCoreCount string = '0.5'
 @description('Memory allocated to a single container instance, e.g. 1Gi')
 param containerMemory string = '1.0Gi'
 
-resource app 'Microsoft.App/containerApps@2022-03-01' = {
+resource app 'Microsoft.App/containerApps@2022-10-01' = {
   name: name
   location: location
   tags: tags
@@ -83,17 +83,17 @@ resource app 'Microsoft.App/containerApps@2022-03-01' = {
   }
 }
 
-resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
+resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-10-01' existing = {
   name: containerAppsEnvironmentName
 }
 
 // 2022-02-01-preview needed for anonymousPullEnabled
-resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-02-01-preview' existing = {
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
 }
 
 // user assigned managed identity to use throughout
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
   name: managedIdentityName
 }
 

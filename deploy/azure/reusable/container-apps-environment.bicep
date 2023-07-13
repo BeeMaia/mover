@@ -6,7 +6,7 @@ param logAnalyticsWorkspaceName string
 param applicationInsightsName string = ''
 param daprEnabled bool = false
 
-resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
+resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-10-01' = {
   name: name
   location: location
   tags: tags

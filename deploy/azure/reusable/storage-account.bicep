@@ -9,7 +9,7 @@ param kind string = 'StorageV2'
 param minimumTlsVersion string = 'TLS1_2'
 param sku object = { name: 'Standard_LRS' }
 
-resource storage 'Microsoft.Storage/storageAccounts@2022-05-01' = {
+resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: name
   location: location
   tags: tags
@@ -37,12 +37,12 @@ resource storage 'Microsoft.Storage/storageAccounts@2022-05-01' = {
 
 // Grant permissions for the container app to write to Azure Blob via Managed Identity 
 @description('This is the built-in Storage Blob Data Contributor role. See https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor')
-resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+resource contributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
   scope: storage
   name: 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 }
 
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, contributorRoleDefinition.id)
   properties: {
     roleDefinitionId: contributorRoleDefinition.id
@@ -51,7 +51,7 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-prev
   }
 }
 
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
   name: managedIdentityName
 }
 
