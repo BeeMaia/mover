@@ -1,4 +1,4 @@
-name: 2. Build and Publish mover-api image to registry
+name: 2. Build and Publish to Registry
 on:
   push:
     branches: ["main"]
