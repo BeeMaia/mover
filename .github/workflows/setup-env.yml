@@ -19,7 +19,7 @@ jobs:
           inlineScript: |
             az config set bicep.use_binary_from_path=false
             az bicep install
-            az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/azure/main.bicep
+            az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/azure/main.bicep \
               -p \
                 apiImageName='mover-api:main' \
                 registryName=${{ secrets.REGISTRY_LOGINURL }}
