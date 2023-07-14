@@ -10,7 +10,7 @@ namespace Mover.Modules.FitDecoder
     {
         public static async Task<IResult> HandleFitCreatedAsync(
             IEventHandler<FitCreated> eventHandler,
-            EventGridEvent<BlobCreated> body,
+            CloudEvent<BlobCreated> body,
             CancellationToken cancellationToken
         )
         {

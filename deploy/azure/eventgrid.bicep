@@ -23,7 +23,7 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
         endpointUrl: webhookEndpointUrl
       }
     }
-    eventDeliverySchema: 'EventGridSchema'
+    eventDeliverySchema: 'CloudEventSchemaV1_0'
     filter: {
       includedEventTypes: [
         'Microsoft.Storage.BlobCreated'
