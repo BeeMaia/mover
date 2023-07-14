@@ -56,6 +56,11 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
         external: external
         targetPort: targetPort
         transport: 'auto'
+        corsPolicy:{
+          allowedOrigins: ['*']
+          allowedMethods: ['*']
+          allowedHeaders: ['*']
+        }
       }
       dapr: {
         enabled: daprEnabled
