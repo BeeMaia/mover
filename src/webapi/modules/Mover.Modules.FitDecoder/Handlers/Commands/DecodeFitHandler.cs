@@ -17,7 +17,7 @@ public sealed class DecodeFitHandler : Mover.Shared.Handlers.CommandHandler<Deco
 
     public override async Task HandleAsync(DecodeFit command, CancellationToken cancellationToken)
     {
-        await fitDecoderService.DecodeAsync(command.RawId, command.FileName, cancellationToken).ConfigureAwait(false);
-        await ServiceBus.PublishAsync(new FitDecoded(command.RawId), cancellationToken).ConfigureAwait(false);
+        var gpxFileName = await fitDecoderService.DecodeAsync(command.RawId, command.FileName, cancellationToken).ConfigureAwait(false);
+        await ServiceBus.PublishAsync(new FitDecoded(command.RawId, gpxFileName), cancellationToken).ConfigureAwait(false);
     }
 }

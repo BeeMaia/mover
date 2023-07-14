@@ -17,11 +17,13 @@ public class FitDecoderService : IFitDecoderService
         this.blobRepository = blobRepository ?? throw new ArgumentNullException(nameof(blobRepository));
     }
 
-    public async Task DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken)
+    public async Task<string> DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken)
     {
         var data = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_FITBLOB, fileName, cancellationToken).ConfigureAwait(false);
         var gpx = DecodeAsGPX(data);
-        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, $"{Path.GetFileNameWithoutExtension(fileName)}.gpx", gpx.ToArray(), cancellationToken).ConfigureAwait(false);
+        var gpxFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.gpx";
+        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, gpxFileName , gpx.ToArray(), cancellationToken).ConfigureAwait(false);
+        return gpxFileName;
     }
 
     private static Gpx DecodeAsGPX(byte[] data)

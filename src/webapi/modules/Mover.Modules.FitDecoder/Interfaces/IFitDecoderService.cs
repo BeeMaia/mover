@@ -2,5 +2,5 @@
 
 public interface IFitDecoderService
 {
-    Task DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken);
+    Task<string> DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken);
 }
