@@ -3,6 +3,7 @@ param webhookEndpointUrl string
 param systemTopicName string
 param eventSubName string
 param location string = resourceGroup().location
+param managedIdentityName string
 
 resource systemTopic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
   name: systemTopicName
@@ -21,6 +22,8 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
       endpointType: 'WebHook'
       properties: {
         endpointUrl: webhookEndpointUrl
+        azureActiveDirectoryApplicationIdOrUri: managedIdentity.id
+        azureActiveDirectoryTenantId: managedIdentity.properties.tenantId
       }
     }
     eventDeliverySchema: 'CloudEventSchemaV1_0'
@@ -36,3 +39,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing 
   name: storageAccountName
 }
 
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
+  name: managedIdentityName
+}
