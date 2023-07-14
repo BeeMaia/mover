@@ -62,6 +62,7 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
         appId: daprApp
         appProtocol: daprAppProtocol
         appPort: targetPort
+        enableApiLogging: true
       }
       registries: [
         {
