@@ -3,6 +3,7 @@ param managedIdentityName string
 param location string
 param skuName string = 'Standard'
 param tags object = {}
+param topics array = []
 
 resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
   name: name
@@ -46,6 +47,11 @@ resource roleAssignmentSender 'Microsoft.Authorization/roleAssignments@2022-04-0
     principalType: 'ServicePrincipal' // managed identity is a form of service principal
   }
 }
+
+resource topic 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' = [for t in topics: {
+  name: t
+  parent: serviceBusNamespace
+}]
 
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
   name: managedIdentityName

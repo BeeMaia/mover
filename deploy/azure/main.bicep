@@ -73,6 +73,10 @@ module serviceBus './reusable/servicebus.bicep' = {
     name:'${abbrs.serviceBusNamespaces}${resourceToken}'
     location:location
     managedIdentityName: security.outputs.managedIdentityName
+    topics: [
+      'decodefit'
+      'fitdecoded'
+    ]
   }
 }
 
@@ -80,10 +84,10 @@ module eventgrid 'eventgrid.bicep' ={
   name: 'eventgrid'
   params: {
     location: location
-    eventSubName: '${abbrs.eventGridEventSubscriptions}FitCreated'
+    eventSubName: '${abbrs.eventGridEventSubscriptions}fitcreated'
     storageAccountName: storage.outputs.name
     serviceBusName: serviceBus.outputs.serviceBusName
-    serviceBusQueueName: 'FitCreated'
+    serviceBusQueueName: 'fitcreated'
     systemTopicName: '${abbrs.eventGridDomainsTopics}${resourceToken}'
   }
 }
