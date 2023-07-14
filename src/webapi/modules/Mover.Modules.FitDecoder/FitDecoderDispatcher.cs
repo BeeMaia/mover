@@ -16,12 +16,5 @@ namespace Mover.Modules.FitDecoder
         {
             return CommandDispatcher.DispatchAsync(command, commandHandler, cancellationToken);
         }
-
-        [Topic(Constants.Dapr.MOVER_QUEUE, "fitcreated")]
-        public static Task<IResult> HandleFitCreatedAsync(EventGridEvent<BlobCreated> @event, IEventHandler<FitCreated> eventHandler, CancellationToken cancellationToken)
-        {
-            var fileName = @event.data.url.Split('/').Last();
-            return EventDispatcher.DispatchAsync(new FitCreated(fileName), eventHandler, cancellationToken);
-        }
     }
 }

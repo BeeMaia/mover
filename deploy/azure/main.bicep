@@ -86,8 +86,7 @@ module eventgrid 'eventgrid.bicep' ={
     location: location
     eventSubName: '${abbrs.eventGridEventSubscriptions}fitcreated'
     storageAccountName: storage.outputs.name
-    serviceBusName: serviceBus.outputs.serviceBusName
-    serviceBusQueueName: 'fitcreated'
+    webhookEndpointUrl: '${api.outputs.SERVICE_API_URI}/v1/fitDecoder/fitcreated'
     systemTopicName: '${abbrs.eventGridDomainsTopics}${resourceToken}'
   }
 }
