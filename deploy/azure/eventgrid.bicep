@@ -22,7 +22,7 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
       endpointType: 'WebHook'
       properties: {
         endpointUrl: webhookEndpointUrl
-        azureActiveDirectoryApplicationIdOrUri: managedIdentity.id
+        azureActiveDirectoryApplicationIdOrUri: managedIdentity.properties.clientId
         azureActiveDirectoryTenantId: managedIdentity.properties.tenantId
       }
     }
