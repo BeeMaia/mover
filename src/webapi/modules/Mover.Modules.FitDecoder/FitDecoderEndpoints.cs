@@ -9,6 +9,7 @@ namespace Mover.Modules.FitDecoder
     public static class FitDecoderEndpoints
     {
         public static async Task<IResult> HandleFitCreatedAsync(
+            HttpContext http,
             IEventHandler<FitCreated> eventHandler,
             CloudEvent<BlobCreated> body,
             CancellationToken cancellationToken
@@ -18,6 +19,7 @@ namespace Mover.Modules.FitDecoder
             {
                 var fileName = body.data.url.Split('/').Last();
                 await EventDispatcher.DispatchAsync(new FitCreated(fileName), eventHandler, cancellationToken);
+                http.Response.Headers.Add("WebHook-Allowed-Origin", http.Request.Headers.Origin);
                 return Results.NoContent();
             }
             catch (Exception ex)

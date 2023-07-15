@@ -30,21 +30,19 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
         endpointUrl: webhookEndpointUrl
         deliveryAttributeMappings: [
 					{
-						name: 'Access-Control-Request-Method',
-						type: 'Static',
+						name: 'Access-Control-Request-Method'
+						type: 'Static'
 						properties: {
-							value: '*',
-							isSecret: false,
-							sourceField: ''
+							value: '*'
+							isSecret: false
 						}
-					},
+					}
 					{
-						name: 'Origin',
-						type: 'Static',
+						name: 'Origin'
+						type: 'Static'
 						properties: {
-							value: '*',
-							isSecret: false,
-							sourceField: ''
+							value: '${systemTopic.name}.azure.com'
+							isSecret: false
 						}
 					}
 				]
