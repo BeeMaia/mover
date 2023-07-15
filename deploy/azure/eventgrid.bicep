@@ -28,6 +28,26 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
       endpointType: 'WebHook'
       properties: {
         endpointUrl: webhookEndpointUrl
+        deliveryAttributeMappings: [
+					{
+						name: 'Access-Control-Request-Method',
+						type: 'Static',
+						properties: {
+							value: '*',
+							isSecret: false,
+							sourceField: ''
+						}
+					},
+					{
+						name: 'Origin',
+						type: 'Static',
+						properties: {
+							value: '*',
+							isSecret: false,
+							sourceField: ''
+						}
+					}
+				]
       }
     }
     eventDeliverySchema: 'CloudEventSchemaV1_0'
