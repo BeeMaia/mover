@@ -5,7 +5,7 @@ param eventSubName string
 param location string = resourceGroup().location
 param managedIdentityName string
 
-resource systemTopic 'Microsoft.EventGrid/systemTopics@2023-06-01-preview' = {
+resource systemTopic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
   name: systemTopicName
   location: location
   identity:{
@@ -29,23 +29,23 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
       properties: {
         endpointUrl: webhookEndpointUrl
         deliveryAttributeMappings: [
-					{
-						name: 'Access-Control-Request-Method'
-						type: 'Static'
-						properties: {
-							value: '*'
-							isSecret: false
-						}
-					}
-					{
-						name: 'Origin'
-						type: 'Static'
-						properties: {
-							value: '${systemTopic.name}.azure.com'
-							isSecret: false
-						}
-					}
-				]
+          {
+	     name: 'Access-Control-Request-Method'
+	     type: 'Static'
+	     properties: {
+	       value: '*'
+	       isSecret: false
+	     }
+          }
+	  {
+	     name: 'Origin'
+	     type: 'Static'
+	     properties: {
+	       value: '${systemTopic.name}.azure.com'
+	       isSecret: false
+	     }
+	   }
+	]
       }
     }
     eventDeliverySchema: 'CloudEventSchemaV1_0'
