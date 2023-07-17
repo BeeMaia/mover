@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Google.Api;
+using Microsoft.AspNetCore.Http;
 using Mover.Modules.FitDecoder.Shared.Events;
 using Mover.Shared.Dispatchers;
 using Mover.Shared.Interfaces;
@@ -15,17 +16,22 @@ namespace Mover.Modules.FitDecoder
             CancellationToken cancellationToken
         )
         {
-            if (http.Request.Method.Equals("options", StringComparison.CurrentCultureIgnoreCase))
-            {
-                http.Response.Headers.Add("WebHook-Allowed-Origin", http.Request.Headers.Origin);
-                return Results.NoContent();
-            }
+            // Set the CORS headers
+            http.Response.Headers.Add("WebHook-Allowed-Origin", "*");
+            http.Response.Headers.Add("Access-Control-Allow-Methods", "POST");
+
+            // Return a 200 OK response
+            http.Response.StatusCode = StatusCodes.Status200OK;
 
             try
             {
-                var fileName = body.data.url.Split('/').Last();
-                await EventDispatcher.DispatchAsync(new FitCreated(fileName), eventHandler, cancellationToken);
-                return Results.NoContent();
+                if (body != null && http.Request.Method.Equals("POST", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    var fileName = body.data.url.Split('/').Last();
+                    await EventDispatcher.DispatchAsync(new FitCreated(fileName), eventHandler, cancellationToken);
+                }
+
+                return Results.Ok();
             }
             catch (Exception ex)
             {
