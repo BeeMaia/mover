@@ -27,5 +27,12 @@ namespace Mover.Modules.FitDecoder
                 return Results.BadRequest(ex.Message);
             }
         }
+
+        public static IResult HandleFitCreatedOptions(
+            HttpContext http)
+        {
+            http.Response.Headers.Add("WebHook-Allowed-Origin", http.Request.Headers.Origin);
+            return Results.NoContent();
+        }
     }
 }

@@ -15,18 +15,22 @@ public sealed class FitDecoderModule : IModule
             .WithTags("FitDecoderDispatchers");
 
         mapGroup.MapPost("/decodefit", FitDecoderDispatcher.HandleDecodeFitAsync)
-              .Produces(StatusCodes.Status204NoContent)
-              .WithName("DecodeFitCommand");
+            .Produces(StatusCodes.Status204NoContent)
+            .WithName("DecodeFitCommand");
     }
 
     public void MapEndpoints(IEndpointRouteBuilder endpoints)
     {
         var mapGroup = endpoints.MapGroup("v1/fitDecoder")
-           .WithTags("FitDecoder");
+            .WithTags("FitDecoder");
 
         mapGroup.MapPost("/fitcreated", FitDecoderEndpoints.HandleFitCreatedAsync)
-             .Produces(StatusCodes.Status204NoContent)
-             .WithName("FitCreatedHook");
+            .Produces(StatusCodes.Status204NoContent)
+            .WithName("FitCreatedHook");
+
+        mapGroup.MapMethods("/fitcreated", new string[] { "OPTIONS" }, FitDecoderEndpoints.HandleFitCreatedOptions)
+            .Produces(StatusCodes.Status204NoContent)
+            .WithName("FitCreatedHookOptions");
     }
 
     public void RegisterModule(WebApplicationBuilder builder)
