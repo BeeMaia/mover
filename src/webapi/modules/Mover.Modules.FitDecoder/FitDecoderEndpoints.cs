@@ -1,5 +1,4 @@
-﻿using Google.Api;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Mover.Modules.FitDecoder.Shared.Events;
 using Mover.Shared.Dispatchers;
 using Mover.Shared.Interfaces;
