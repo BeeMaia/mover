@@ -27,10 +27,6 @@ public sealed class FitDecoderModule : IModule
         mapGroup.MapPost("/fitcreated", FitDecoderEndpoints.HandleFitCreatedAsync)
             .Produces(StatusCodes.Status204NoContent)
             .WithName("FitCreatedHook");
-
-        mapGroup.MapMethods("/fitcreated", new string[] { "OPTIONS" }, FitDecoderEndpoints.HandleFitCreatedOptions)
-            .Produces(StatusCodes.Status204NoContent)
-            .WithName("FitCreatedHookOptions");
     }
 
     public void RegisterModule(WebApplicationBuilder builder)

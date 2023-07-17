@@ -15,24 +15,22 @@ namespace Mover.Modules.FitDecoder
             CancellationToken cancellationToken
         )
         {
+            if (http.Request.Method.Equals("options", StringComparison.CurrentCultureIgnoreCase))
+            {
+                http.Response.Headers.Add("WebHook-Allowed-Origin", http.Request.Headers.Origin);
+                return Results.NoContent();
+            }
+
             try
             {
                 var fileName = body.data.url.Split('/').Last();
                 await EventDispatcher.DispatchAsync(new FitCreated(fileName), eventHandler, cancellationToken);
-                http.Response.Headers.Add("WebHook-Allowed-Origin", http.Request.Headers.Origin);
                 return Results.NoContent();
             }
             catch (Exception ex)
             {
                 return Results.BadRequest(ex.Message);
             }
-        }
-
-        public static IResult HandleFitCreatedOptions(
-            HttpContext http)
-        {
-            http.Response.Headers.Add("WebHook-Allowed-Origin", http.Request.Headers.Origin);
-            return Results.NoContent();
         }
     }
 }
