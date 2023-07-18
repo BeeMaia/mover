@@ -1,7 +1,6 @@
 param storageAccountName string
-param serviceBusQueueName string
+param serviceBusTopicName string
 param serviceBusName string
-param forwardTopicName string
 param systemTopicName string
 param eventSubName string
 param location string = resourceGroup().location
@@ -27,13 +26,14 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
   name: eventSubName
   properties: {
     destination: {
-      endpointType: 'ServiceBusQueue'
+      endpointType: 'ServiceBusTopic'
       properties: {
-        resourceId: queue.id
+        resourceId: topic.id
       }
     }
     eventDeliverySchema: 'CloudEventSchemaV1_0'
     filter: {
+      subjectBeginsWith: 'stmoverdev/fit-files'
       includedEventTypes: [
         'Microsoft.Storage.BlobCreated'
       ]
@@ -41,23 +41,9 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
   }
 }
 
-resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
+resource topic 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' existing = {
   parent: serviceBusNamespace
-  name: serviceBusQueueName
-  properties: {
-    lockDuration: 'PT5M'
-    maxSizeInMegabytes: 1024
-    requiresDuplicateDetection: false
-    requiresSession: false
-    defaultMessageTimeToLive: 'P10675199DT2H48M5.4775807S'
-    deadLetteringOnMessageExpiration: false
-    duplicateDetectionHistoryTimeWindow: 'PT10M'
-    maxDeliveryCount: 10
-    autoDeleteOnIdle: 'P10675199DT2H48M5.4775807S'
-    enablePartitioning: false
-    enableExpress: false
-    forwardTo: forwardTopicName
-  }
+  name: serviceBusTopicName
 }
 
 resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2021-11-01' existing = {

@@ -86,11 +86,10 @@ module eventgrid 'eventgrid.bicep' ={
   name: 'eventgrid'
   params: {
     location: location
-    eventSubName: '${abbrs.eventGridEventSubscriptions}to-blobcreated'
+    eventSubName: '${abbrs.eventGridEventSubscriptions}blobcreated'
     storageAccountName: storage.outputs.name
     serviceBusName: serviceBus.outputs.serviceBusName
-    serviceBusQueueName: 'to-blobcreated'
-    forwardTopicName: 'blobcreated'
+    serviceBusTopicName: 'blobcreated'
     systemTopicName: '${abbrs.eventGridDomainsTopics}${resourceToken}'
     managedIdentityName: security.outputs.managedIdentityName
   }
