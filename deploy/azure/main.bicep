@@ -76,6 +76,8 @@ module serviceBus './reusable/servicebus.bicep' = {
     topics: [
       'decodefit'
       'fitdecoded'
+      'fitcreated'
+      'blobcreated'
     ]
   }
 }
@@ -84,10 +86,11 @@ module eventgrid 'eventgrid.bicep' ={
   name: 'eventgrid'
   params: {
     location: location
-    eventSubName: '${abbrs.eventGridEventSubscriptions}fitcreated'
+    eventSubName: '${abbrs.eventGridEventSubscriptions}to-blobcreated'
     storageAccountName: storage.outputs.name
     serviceBusName: serviceBus.outputs.serviceBusName
-    serviceBusQueueName: 'fitcreated'
+    serviceBusQueueName: 'to-blobcreated'
+    forwardTopicName: 'blobcreated'
     systemTopicName: '${abbrs.eventGridDomainsTopics}${resourceToken}'
     managedIdentityName: security.outputs.managedIdentityName
   }

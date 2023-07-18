@@ -1,6 +1,7 @@
 param storageAccountName string
 param serviceBusQueueName string
 param serviceBusName string
+param forwardTopicName string
 param systemTopicName string
 param eventSubName string
 param location string = resourceGroup().location
@@ -55,6 +56,7 @@ resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
     autoDeleteOnIdle: 'P10675199DT2H48M5.4775807S'
     enablePartitioning: false
     enableExpress: false
+    forwardTo: forwardTopicName
   }
 }
 

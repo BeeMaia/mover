@@ -93,33 +93,6 @@ resource pubsubDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2
   ]
 }
 
-resource queueDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
-  name: 'mover-queue'
-  parent: containerAppsEnvironment
-  properties: {
-    componentType: 'pubsub.azure.servicebus.queues'
-    version: 'v1'
-    ignoreErrors: false
-    initTimeout: '5s'
-    metadata: [
-      {
-        name: 'namespaceName'
-        value: serviceBusNamespace.properties.serviceBusEndpoint
-      }
-      {
-        name: 'azureClientId'
-        value: managedIdentity.properties.clientId
-      }
-    ]
-    scopes: [
-      containerAppName
-    ]
-  }
-  dependsOn: [
-    serviceBusNamespace
-  ]
-}
-
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: managedIdentityName
 }

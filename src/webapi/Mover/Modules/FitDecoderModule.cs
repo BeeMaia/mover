@@ -25,12 +25,6 @@ public sealed class FitDecoderModule : IModule
 
     public void MapEndpoints(IEndpointRouteBuilder endpoints)
     {
-        //var mapGroup = endpoints.MapGroup("v1/fitDecoder")
-        //    .WithTags("FitDecoder");
-
-        //mapGroup.MapPost("/fitcreated", FitDecoderEndpoints.HandleFitCreatedAsync)
-        //    .Produces(StatusCodes.Status204NoContent)
-        //    .WithName("FitCreatedHook");
     }
 
     public void RegisterModule(WebApplicationBuilder builder)

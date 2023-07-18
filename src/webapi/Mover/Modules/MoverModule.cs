@@ -19,7 +19,12 @@ public sealed class MoverModule : IModule
 
     public void MapDispatchers(IEndpointRouteBuilder endpoints)
     {
-        // no dispatchers
+        var mapGroup = endpoints.MapGroup("v1/mover/dispatchers")
+            .WithTags("MoverDispatchers");
+
+        mapGroup.MapPost("/blobcreated", MoverDispatcher.HandleBlobCreatedAsync)
+            .Produces(StatusCodes.Status204NoContent)
+            .WithName("BlobCreatedEvent");
     }
 
     public void RegisterModule(WebApplicationBuilder builder)
