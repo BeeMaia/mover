@@ -1,5 +1,6 @@
 param storageAccountName string
-param webhookEndpointUrl string
+param serviceBusQueueName string
+param serviceBusName string
 param systemTopicName string
 param eventSubName string
 param location string = resourceGroup().location
@@ -25,27 +26,9 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
   name: eventSubName
   properties: {
     destination: {
-      endpointType: 'WebHook'
+      endpointType: 'ServiceBusQueue'
       properties: {
-        endpointUrl: webhookEndpointUrl
-        deliveryAttributeMappings: [
-          {
-	          name: 'Access-Control-Request-Method'
-	          type: 'Static'
-	          properties: {
-	            value: '*'
-	            isSecret: false
-	          }
-          }
-	        {
-	          name: 'Origin'
-	          type: 'Static'
-	          properties: {
-	            value: '${systemTopic.name}.azure.com'
-	            isSecret: false
-	          }
-	        }
-	      ]
+        resourceId: queue.id
       }
     }
     eventDeliverySchema: 'CloudEventSchemaV1_0'
@@ -55,6 +38,28 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
       ]
     }
   }
+}
+
+resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
+  parent: serviceBusNamespace
+  name: serviceBusQueueName
+  properties: {
+    lockDuration: 'PT5M'
+    maxSizeInMegabytes: 1024
+    requiresDuplicateDetection: false
+    requiresSession: false
+    defaultMessageTimeToLive: 'P10675199DT2H48M5.4775807S'
+    deadLetteringOnMessageExpiration: false
+    duplicateDetectionHistoryTimeWindow: 'PT10M'
+    maxDeliveryCount: 10
+    autoDeleteOnIdle: 'P10675199DT2H48M5.4775807S'
+    enablePartitioning: false
+    enableExpress: false
+  }
+}
+
+resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2021-11-01' existing = {
+  name: serviceBusName
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {

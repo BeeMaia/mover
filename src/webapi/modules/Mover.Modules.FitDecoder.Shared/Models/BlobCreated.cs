@@ -1,4 +1,4 @@
-namespace Mover.Shared.Models;
+namespace Mover.Modules.FitDecoder.Shared.Models;
 
 public class BlobCreated
 {
