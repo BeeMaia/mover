@@ -27,11 +27,26 @@ resource receiverRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04
   name: '4f6d3b9b-027b-4f4c-9142-0e5a2a2247e0'
 }
 
+resource ownerRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
+  scope: serviceBusNamespace
+  name: '090c5cfd-751d-490a-894a-3ce6f1109419'
+}
+
 resource roleAssignmentReceiver 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, receiverRoleDefinition.id)
   scope: serviceBusNamespace
   properties: {
     roleDefinitionId: receiverRoleDefinition.id
+    principalId: managedIdentity.properties.principalId
+    principalType: 'ServicePrincipal' // managed identity is a form of service principal
+  }
+}
+
+resource roleAssignmentOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup().id, ownerRoleDefinition.id)
+  scope: serviceBusNamespace
+  properties: {
+    roleDefinitionId: ownerRoleDefinition.id
     principalId: managedIdentity.properties.principalId
     principalType: 'ServicePrincipal' // managed identity is a form of service principal
   }
