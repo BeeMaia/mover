@@ -1,4 +1,6 @@
 ﻿using Dynastream.Fit;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Configuration;
 using Mover.Modules.FitDecoder.Extensions;
 using Mover.Modules.FitDecoder.Interfaces;
 using Mover.Shared;
@@ -11,16 +13,23 @@ namespace Mover.Modules.FitDecoder.Services;
 public class FitDecoderService : IFitDecoderService
 {
     private readonly IBlobRepository blobRepository;
+    private readonly ILogger logger;
 
-    public FitDecoderService(IBlobRepository blobRepository)
+    public FitDecoderService(IBlobRepository blobRepository, ILoggerFactory loggerFactory)
     {
         this.blobRepository = blobRepository ?? throw new ArgumentNullException(nameof(blobRepository));
+        logger = loggerFactory.CreateLogger(GetType());
     }
 
     public async Task<string> DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken)
     {
+        logger.LogInformation("Start decoding blob: {fileName}", fileName);
+
         var data = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_FITBLOB, fileName, cancellationToken).ConfigureAwait(false);
         var gpx = DecodeAsGPX(data);
+
+        logger.LogInformation("Decoded blob: {fileName}", fileName);
+
         var gpxFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.gpx";
         await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, gpxFileName , gpx.ToArray(), cancellationToken).ConfigureAwait(false);
         return gpxFileName;

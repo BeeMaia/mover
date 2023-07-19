@@ -9,8 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Dapr.AspNetCore" Version="1.10.0" />
+	  <PackageReference Include="Dapr.AspNetCore" Version="1.11.0" />
 	  <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+	  <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
 	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />

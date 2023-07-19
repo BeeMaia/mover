@@ -6,7 +6,7 @@ Azure Container Apps is a managed serverless container offering for building and
 
 Dapr is a CNCF project that helps developers overcome the inherent challenges presented by distributed applications, such as state management and service invocation. Container Apps also provides a fully-managed integration with the Kubernetes Event Driven Autoscaler (KEDA). KEDA allows your containers to autoscale based on incoming events from external services such Azure Service Bus or Redis.
 
-## Solution Overview
+## High-Level Overview of the application
 
 ![image of architecture](./assets/arch.png)
 

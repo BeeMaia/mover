@@ -22,8 +22,8 @@ resource fitBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@
         value: 'fit-files'
       }
       {
-        name: 'azureClientId'
-        value: managedIdentity.properties.clientId
+        name: 'accountKey'
+        value: storageAccount.listKeys().keys[0].value
       }
     ]
     scopes: [
@@ -53,8 +53,8 @@ resource gpxBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@
         value: 'gpx-files'
       }
       {
-        name: 'azureClientId'
-        value: managedIdentity.properties.clientId
+        name: 'accountKey'
+        value: storageAccount.listKeys().keys[0].value
       }
     ]
     scopes: [
@@ -77,7 +77,7 @@ resource pubsubDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2
     metadata: [
       {
         name: 'namespaceName'
-        value: serviceBusNamespace.properties.serviceBusEndpoint
+        value: '${serviceBusName}.servicebus.windows.net'
       }
       {
         name: 'azureClientId'
