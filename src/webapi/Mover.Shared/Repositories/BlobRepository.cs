@@ -38,8 +38,7 @@ public class BlobRepository : IBlobRepository
         request.Metadata.Add("blobName", fileName);
 
         var response = await dapr.InvokeBindingAsync(request, cancellationToken: cancellationToken);
-        logger.LogInformation(JsonSerializer.Serialize(response));
 
-        throw new Exception(response.GetType().ToString());
+        return response.Data.ToArray();
     }
 }
