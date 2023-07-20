@@ -116,6 +116,7 @@ module api 'api.bicep' = {
     containerRegistryName: registryName
     serviceName: apiServiceName
     managedIdentityName: security.outputs.managedIdentityName
+    applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
   dependsOn:[dapr]
 }
