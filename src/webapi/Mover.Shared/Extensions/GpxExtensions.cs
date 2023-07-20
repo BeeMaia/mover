@@ -13,11 +13,11 @@ namespace Mover.Shared.Extensions
             using (var writer = new StreamWriter(memStream))
             {
                 serializer.Serialize(writer, gpx);
+
+                memStream.Position = 0;
+
+                return memStream.ToArray();
             }
-
-            memStream.Position = 0;
-
-            return memStream.ToArray();
         }
     }
 }
