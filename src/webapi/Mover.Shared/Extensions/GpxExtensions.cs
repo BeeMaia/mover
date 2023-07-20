@@ -7,17 +7,12 @@ namespace Mover.Shared.Extensions
     {
         public static byte[] ToArray(this Gpx gpx)
         {
-            var serializer = new XmlSerializer(typeof(Gpx));
+            MemoryStream memoryStream = new();
+            XmlSerializer xmlSerializer = new(typeof(Gpx));
+            xmlSerializer.Serialize(memoryStream, gpx);
+            memoryStream.Position = 0;
 
-            var memStream = new MemoryStream();
-            using (var writer = new StreamWriter(memStream))
-            {
-                serializer.Serialize(writer, gpx);
-
-                memStream.Position = 0;
-
-                return memStream.ToArray();
-            }
+            return memoryStream.ToArray();
         }
     }
 }
