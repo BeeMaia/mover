@@ -34,7 +34,12 @@ public class BlobRepository : IBlobRepository
         {
             blobName = fileName
         };
+
+        var metadata = new Dictionary<string, string>
+        {
+            { "blobName", fileName }
+        };
       
-        return dapr.InvokeBindingAsync<object, byte[]>(blobStorage, "get", data, cancellationToken: cancellationToken);
+        return dapr.InvokeBindingAsync<object, byte[]>(blobStorage, "get", data, metadata, cancellationToken: cancellationToken);
     }
 }
