@@ -33,6 +33,7 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
     }
     eventDeliverySchema: 'CloudEventSchemaV1_0'
     filter: {
+      subjectBeginsWith: '/blobServices/default/containers/fit-files/'
       includedEventTypes: [
         'Microsoft.Storage.BlobCreated'
       ]

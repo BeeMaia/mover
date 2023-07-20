@@ -4,7 +4,7 @@
 [Serializable()]
 [System.ComponentModel.DesignerCategory("code")]
 [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://www.topografix.com/GPX/1/1")]
-[System.Xml.Serialization.XmlRoot(Namespace = "http://www.topografix.com/GPX/1/1", IsNullable = false)]
+[System.Xml.Serialization.XmlRoot(Namespace = "http://www.topografix.com/GPX/1/1", ElementName ="gpx", IsNullable = false)]
 public partial class Gpx
 {
 
