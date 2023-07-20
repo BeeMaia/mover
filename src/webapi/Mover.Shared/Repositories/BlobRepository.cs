@@ -27,7 +27,7 @@ public class BlobRepository : IBlobRepository
         return dapr.InvokeBindingAsync(blobStorage, "create", data, metadata, cancellationToken);
     }
 
-    public Task<byte[]> GetBlobAsync(string blobStorage, string fileName, CancellationToken cancellationToken)
+    public async Task<byte[]> GetBlobAsync(string blobStorage, string fileName, CancellationToken cancellationToken)
     {
         logger.LogInformation("Get blob: {fileName}", fileName);
         var data = new
@@ -40,6 +40,9 @@ public class BlobRepository : IBlobRepository
             { "blobName", fileName }
         };
       
-        return dapr.InvokeBindingAsync<object, byte[]>(blobStorage, "get", data, metadata, cancellationToken: cancellationToken);
+        var obj = await dapr.InvokeBindingAsync<object, object>(blobStorage, "get", data, metadata, cancellationToken: cancellationToken);
+        logger.LogInformation(obj.ToString());
+
+        throw new Exception(obj.GetType().ToString());
     }
 }
