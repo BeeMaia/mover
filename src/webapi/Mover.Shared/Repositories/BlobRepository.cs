@@ -1,6 +1,10 @@
 ﻿using Dapr.Client;
+using Google.Protobuf;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Mover.Shared.Interfaces;
+using System.ComponentModel;
+using System.Text.Json;
 
 namespace Mover.Shared.Repositories;
 
@@ -30,19 +34,12 @@ public class BlobRepository : IBlobRepository
     public async Task<byte[]> GetBlobAsync(string blobStorage, string fileName, CancellationToken cancellationToken)
     {
         logger.LogInformation("Get blob: {fileName}", fileName);
-        var data = new
-        {
-            blobName = fileName
-        };
+        var request = new BindingRequest(blobStorage, "get");
+        request.Metadata.Add("blobName", fileName);
 
-        var metadata = new Dictionary<string, string>
-        {
-            { "blobName", fileName }
-        };
-      
-        var obj = await dapr.InvokeBindingAsync<object, object>(blobStorage, "get", data, metadata, cancellationToken: cancellationToken);
-        logger.LogInformation(obj.ToString());
+        var response = await dapr.InvokeBindingAsync(request, cancellationToken: cancellationToken);
+        logger.LogInformation(JsonSerializer.Serialize(response));
 
-        throw new Exception(obj.GetType().ToString());
+        throw new Exception(response.GetType().ToString());
     }
 }
