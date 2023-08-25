@@ -31,7 +31,7 @@ public class FitDecoderService : IFitDecoderService
         logger.LogInformation("Decoded blob: {fileName}", fileName);
 
         var gpxFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.gpx";
-        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, gpxFileName , gpx.ToArray(), cancellationToken).ConfigureAwait(false);
+        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, gpxFileName, gpx.ToArray(), cancellationToken).ConfigureAwait(false);
         return gpxFileName;
     }
 
@@ -56,8 +56,8 @@ public class FitDecoderService : IFitDecoderService
 
                 trkPoint.lat = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.PositionLat) / 11930465;
                 trkPoint.lon = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.PositionLong) / 11930465;
-                trkPoint.ele = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.Altitude);
-
+                trkPoint.ele = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.EnhancedAltitude);
+                
                 trkPoint.extensions = new GpxTrkTrkptExtensions()
                 {
                     TrackPointExtension = new TrackPointExtension()
@@ -65,11 +65,12 @@ public class FitDecoderService : IFitDecoderService
                         atemp = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.Temperature),
                         cad = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.Cadence),
                         hr = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.HeartRate),
-                        speed = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.Speed)
+                        speed = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.EnhancedSpeed)
                     }
                 };
 
-                points.Add(trkPoint);
+                if (trkPoint.lat != 0 && trkPoint.lon != 0)
+                    points.Add(trkPoint);
             }
         };
 
