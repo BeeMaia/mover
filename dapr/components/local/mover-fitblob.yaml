@@ -6,5 +6,7 @@ spec:
   type: bindings.localstorage
   version: v1
   metadata:
-  - name: rootPath
-    value: /temp/fit-files
+    - name: rootPath
+      value: /temp/fit-files
+    - name: direction
+      value: output
