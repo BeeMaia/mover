@@ -1,20 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Dapr.AspNetCore" Version="1.11.0" />
-		<PackageReference Include="Dynastream.Fit.Portable.dll" Version="1.0.1" />
-		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Mover.Modules.FitDecoder.Shared\Mover.Modules.FitDecoder.Shared.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapr.AspNetCore" Version="1.11.0" />
+    <PackageReference Include="Dynastream.Fit.Portable.dll" Version="1.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-rc.1.23419.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0-rc.1.23419.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mover.Modules.FitDecoder.Shared\Mover.Modules.FitDecoder.Shared.csproj" />
+  </ItemGroup>
 </Project>
