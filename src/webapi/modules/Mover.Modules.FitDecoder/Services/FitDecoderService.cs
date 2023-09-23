@@ -41,24 +41,24 @@ public class FitDecoderService : IFitDecoderService
 
         return new Gpx
         {
-            version = (decimal)1.1,
-            creator = "Mover",
-            trk = 
+            Version = (decimal)1.1,
+            Creator = "Mover",
+            Trk = 
             [
                 new GpxTrk
                 {
-                    trkseg =
+                    Trkseg =
                     [
-                        new GpxTrkTrkseg { trkpt = [.. points] }
+                        new GpxTrkTrkseg { Trkpt = [.. points] }
                     ]
                 }
             ]
         };
     }
 
-    private static List<GpxTrkTrksegTrkpt> ParseFitData(byte[] data)
+    private static List<GpxPoint> ParseFitData(byte[] data)
     {
-        var points = new List<GpxTrkTrksegTrkpt>();
+        var points = new List<GpxPoint>();
 
         var fitDecoder = new Decode();
         var mesgBroadcaster = new MesgBroadcaster();
@@ -68,7 +68,7 @@ public class FitDecoderService : IFitDecoderService
             if (e.mesg.Num == MesgNum.Record)
             {
                 var trkPoint = CreateTrkPointFromRecord((RecordMesg)e.mesg);
-                if (trkPoint.lat != 0 && trkPoint.lon != 0)
+                if (trkPoint.Lat != 0 && trkPoint.Lon != 0)
                     points.Add(trkPoint);
             }
         };
@@ -85,23 +85,23 @@ public class FitDecoderService : IFitDecoderService
         return points;
     }
 
-    private static GpxTrkTrksegTrkpt CreateTrkPointFromRecord(RecordMesg recordMessage)
+    private static GpxPoint CreateTrkPointFromRecord(RecordMesg recordMessage)
     {
         var time = recordMessage.FieldValue<uint>(RecordMesg.FieldDefNum.Timestamp);
-        var trkPoint = new GpxTrkTrksegTrkpt
+        var trkPoint = new GpxPoint
         {
-            time = new Dynastream.Fit.DateTime(time).GetDateTime(),
-            lat = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.PositionLat) / GarminDegreeDividend,
-            lon = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.PositionLong) / GarminDegreeDividend,
-            ele = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.EnhancedAltitude),
-            extensions = new GpxTrkTrkptExtensions
+            Time = new Dynastream.Fit.DateTime(time).GetDateTime(),
+            Lat = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.PositionLat) / GarminDegreeDividend,
+            Lon = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.PositionLong) / GarminDegreeDividend,
+            Ele = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.EnhancedAltitude),
+            Extensions = new GpxTrkTrkptExtensions
             {
                 TrackPointExtension = new TrackPointExtension
                 {
-                    atemp = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.Temperature),
-                    cad = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.Cadence),
-                    hr = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.HeartRate),
-                    speed = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.EnhancedSpeed)
+                    Temp = recordMessage.FieldValue<decimal>(RecordMesg.FieldDefNum.Temperature),
+                    Cadence = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.Cadence),
+                    HeartRate = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.HeartRate),
+                    Speed = recordMessage.FieldValue<short>(RecordMesg.FieldDefNum.EnhancedSpeed)
                 }
             }
         };

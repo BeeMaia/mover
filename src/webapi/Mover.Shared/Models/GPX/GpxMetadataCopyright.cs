@@ -1,55 +1,16 @@
 ﻿namespace Mover.Shared.Models.GPX;
 
-/// <remarks/>
 [Serializable()]
 [System.ComponentModel.DesignerCategory("code")]
 [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://www.topografix.com/GPX/1/1")]
-public partial class GpxMetadataCopyright
+public class GpxMetadataCopyright
 {
+    [System.Xml.Serialization.XmlElement("year")]
+    public ushort Year { get; set; }
 
-    private ushort yearField;
-
-    private string licenseField;
-
-    private string authorField;
-
-    /// <remarks/>
-    public ushort year
-    {
-        get
-        {
-            return this.yearField;
-        }
-        set
-        {
-            this.yearField = value;
-        }
-    }
-
-    /// <remarks/>
-    public string license
-    {
-        get
-        {
-            return this.licenseField;
-        }
-        set
-        {
-            this.licenseField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttribute()]
-    public string author
-    {
-        get
-        {
-            return this.authorField;
-        }
-        set
-        {
-            this.authorField = value;
-        }
-    }
+    [System.Xml.Serialization.XmlElement("license")]
+    public string? License { get; set; }
+    
+    [System.Xml.Serialization.XmlAttribute("author")]
+    public string? Author { get; set; }
 }

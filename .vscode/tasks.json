@@ -1,0 +1,55 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/webapi/Mover.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "publish",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "publish",
+        "${workspaceFolder}/src/webapi/Mover.sln",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "--project",
+        "${workspaceFolder}/src/webapi/Mover.sln"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "daprd-debug",
+      "type": "daprd",
+      "appId": "dapr-mover",
+      "appPort": 7603,
+      "httpPort": 3500,
+      "metricsPort": 9090,
+      "dependsOn": ["build"]
+    },
+    {
+      "label": "daprd-down",
+      "type": "daprd-down",
+      "appId": "dapr-mover"
+    }
+  ]
+}

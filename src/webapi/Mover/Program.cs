@@ -26,7 +26,7 @@ app.UseSwagger(s =>
 });
 app.UseSwaggerUI(s =>
 {
-    s.SwaggerEndpoint("/documentation/v1/documentation.json", "Vintner Api");
+    s.SwaggerEndpoint("/documentation/v1/documentation.json", "Mover Api");
     s.RoutePrefix = "documentation";
 });
 

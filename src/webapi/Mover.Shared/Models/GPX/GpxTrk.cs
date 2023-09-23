@@ -1,147 +1,34 @@
 ﻿namespace Mover.Shared.Models.GPX;
 
-/// <remarks/>
 [Serializable()]
 [System.ComponentModel.DesignerCategory("code")]
 [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://www.topografix.com/GPX/1/1")]
-public partial class GpxTrk
+public class GpxTrk
 {
+    [System.Xml.Serialization.XmlElement("name")]
+    public string? Name { get; set; }
 
-    private string nameField;
+    [System.Xml.Serialization.XmlElement("cmt")]
+    public string? Cmt { get; set; }
 
-    private string cmtField;
+    [System.Xml.Serialization.XmlElement("desc")]
+    public string? Desc { get; set; }
 
-    private string descField;
+    [System.Xml.Serialization.XmlElement("src")]
+    public string? Src { get; set; }
 
-    private string srcField;
-
-    private GpxTrkLink[] linkField;
-
-    private string numberField;
-
-    private string typeField;
-
-    private object extensionsField;
-
-    private GpxTrkTrkseg[] trksegField;
-
-    /// <remarks/>
-    public string name
-    {
-        get
-        {
-            return this.nameField;
-        }
-        set
-        {
-            this.nameField = value;
-        }
-    }
-
-    /// <remarks/>
-    public string cmt
-    {
-        get
-        {
-            return this.cmtField;
-        }
-        set
-        {
-            this.cmtField = value;
-        }
-    }
-
-    /// <remarks/>
-    public string desc
-    {
-        get
-        {
-            return this.descField;
-        }
-        set
-        {
-            this.descField = value;
-        }
-    }
-
-    /// <remarks/>
-    public string src
-    {
-        get
-        {
-            return this.srcField;
-        }
-        set
-        {
-            this.srcField = value;
-        }
-    }
-
-    /// <remarks/>
     [System.Xml.Serialization.XmlElement("link")]
-    public GpxTrkLink[] link
-    {
-        get
-        {
-            return this.linkField;
-        }
-        set
-        {
-            this.linkField = value;
-        }
-    }
+    public GpxLink[]? Link { get; set; }
 
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElement(DataType = "integer")]
-    public string number
-    {
-        get
-        {
-            return this.numberField;
-        }
-        set
-        {
-            this.numberField = value;
-        }
-    }
+    [System.Xml.Serialization.XmlElement("number", DataType = "integer")]
+    public int Number { get; set; }
 
-    /// <remarks/>
-    public string type
-    {
-        get
-        {
-            return this.typeField;
-        }
-        set
-        {
-            this.typeField = value;
-        }
-    }
+    [System.Xml.Serialization.XmlElement("type")]
+    public string? Type { get; set; }
 
-    /// <remarks/>
-    public object extensions
-    {
-        get
-        {
-            return this.extensionsField;
-        }
-        set
-        {
-            this.extensionsField = value;
-        }
-    }
+    [System.Xml.Serialization.XmlElement("extensions")]
+    public object? Extensions { get; set; }
 
-    /// <remarks/>
     [System.Xml.Serialization.XmlElement("trkseg")]
-    public GpxTrkTrkseg[] trkseg
-    {
-        get
-        {
-            return this.trksegField;
-        }
-        set
-        {
-            this.trksegField = value;
-        }
-    }
+    public GpxTrkTrkseg[]? Trkseg { get; set; }
 }
