@@ -10,10 +10,10 @@ public class GpxMetadataBounds
 
     [System.Xml.Serialization.XmlAttribute("minlon")]
     public decimal Minlon { get; set; }
-    
+
     [System.Xml.Serialization.XmlAttribute("maxlat")]
     public decimal Maxlat { get; set; }
-    
+
     [System.Xml.Serialization.XmlAttribute("maxlon")]
     public decimal Maxlon { get; set; }
 }

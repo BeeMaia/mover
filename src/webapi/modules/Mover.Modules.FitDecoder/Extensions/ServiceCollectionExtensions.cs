@@ -4,7 +4,7 @@ using Mover.Modules.FitDecoder.Handlers.Events;
 using Mover.Modules.FitDecoder.Interfaces;
 using Mover.Modules.FitDecoder.Services;
 using Mover.Modules.FitDecoder.Shared.Commands;
-using Mover.Modules.FitDecoder.Shared.Events;
+using Mover.Modules.Uploader.Shared.Events;
 using Mover.Shared.Interfaces;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IFitDecoderService, FitDecoderService>();
 
         services.AddScoped<ICommandHandler<DecodeFit>, DecodeFitHandler>();
-        services.AddScoped<IEventHandler<FitCreated>, FitCreatedHandler>();
+        services.AddScoped<IEventHandler<UploadedFit>, UploadedFitHandler>();
 
         return services;
     }

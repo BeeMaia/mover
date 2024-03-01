@@ -14,7 +14,7 @@
             "workingDirectory": "$(ProjectDir)",
             "executablePath": "dapr.exe",
             "nativeDebugging": true,
-            "commandLineArgs": "run --app-id dapr-mover --resources-path ../../../dapr/components/ --app-port 7603 -- dotnet run --project . --urls http://localhost:7603"
+            "commandLineArgs": "run --app-id dapr-mover --resources-path ../../../dapr/components/local/ --app-port 7603 -- dotnet run --project . --urls http://localhost:7603"
         },
         "IIS Express": {
             "commandName": "IISExpress",

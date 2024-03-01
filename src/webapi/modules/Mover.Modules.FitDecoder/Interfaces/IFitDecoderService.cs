@@ -1,6 +1,8 @@
-﻿namespace Mover.Modules.FitDecoder.Interfaces;
+﻿using Mover.Shared.Models.GPX;
+
+namespace Mover.Modules.FitDecoder.Interfaces;
 
 public interface IFitDecoderService
 {
-    Task<string> DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken);
+    Task<Gpx> DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken);
 }

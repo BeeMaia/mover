@@ -7,21 +7,21 @@ public class GpxRte
 {
     [System.Xml.Serialization.XmlElement("name")]
     public string? Name { get; set; }
-   
+
     [System.Xml.Serialization.XmlElement("cmt")]
     public string? Cmt { get; set; }
 
     [System.Xml.Serialization.XmlElement("desc")]
     public string? Desc { get; set; }
-   
+
     [System.Xml.Serialization.XmlElement("src")]
     public string? Src { get; set; }
-    
+
     [System.Xml.Serialization.XmlElement("link")]
-    public GpxLink[]? Link { get; set; } 
+    public GpxLink[]? Link { get; set; }
 
     [System.Xml.Serialization.XmlElement("number", DataType = "integer")]
-    public int? Number { get; set; }    
+    public int? Number { get; set; }
 
     [System.Xml.Serialization.XmlElement("type")]
     public string? Type { get; set; }

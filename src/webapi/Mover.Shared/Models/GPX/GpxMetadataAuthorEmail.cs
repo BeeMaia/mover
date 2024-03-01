@@ -7,7 +7,7 @@ public class GpxMetadataAuthorEmail
 {
     [System.Xml.Serialization.XmlAttribute("id")]
     public string? Id { get; set; }
-    
+
     [System.Xml.Serialization.XmlAttribute("domain")]
     public string? Domain { get; set; }
 }

@@ -7,4 +7,10 @@ public static class Constants
         public const string MOVER_FITBLOB = "mover-fitblob";
         public const string MOVER_GPXBLOB = "mover-gpxblob";
     }
+
+    public static class Extension
+    {
+        public const string FIT = ".fit";
+        public const string GPX = ".gpx";
+    }
 }

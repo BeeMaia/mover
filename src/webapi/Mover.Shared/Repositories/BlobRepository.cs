@@ -1,10 +1,6 @@
 ﻿using Dapr.Client;
-using Google.Protobuf;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Mover.Shared.Interfaces;
-using System.ComponentModel;
-using System.Text.Json;
 
 namespace Mover.Shared.Repositories;
 
@@ -19,7 +15,7 @@ public class BlobRepository : IBlobRepository
         logger = loggerFactory.CreateLogger(GetType());
     }
 
-    public Task CreateBlobAsync(string blobStorage, string fileName, byte[] data, CancellationToken cancellationToken)
+    public async Task CreateBlobAsync(string blobStorage, string fileName, byte[] data, CancellationToken cancellationToken)
     {
         logger.LogInformation("Creating blob: {fileName}", fileName);
 
@@ -28,7 +24,7 @@ public class BlobRepository : IBlobRepository
             { "blobName", fileName }
         };
 
-        return dapr.InvokeBindingAsync(blobStorage, "create", data, metadata, cancellationToken);
+        await dapr.InvokeBindingAsync(blobStorage, "create", data, metadata, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<byte[]> GetBlobAsync(string blobStorage, string fileName, CancellationToken cancellationToken)
@@ -37,7 +33,7 @@ public class BlobRepository : IBlobRepository
         var request = new BindingRequest(blobStorage, "get");
         request.Metadata.Add("blobName", fileName);
 
-        var response = await dapr.InvokeBindingAsync(request, cancellationToken: cancellationToken);
+        var response = await dapr.InvokeBindingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         return response.Data.ToArray();
     }

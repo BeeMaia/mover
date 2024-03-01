@@ -16,7 +16,7 @@ public class ServiceBus : IServiceBus
         this.logger = loggerFactory.CreateLogger(GetType());
     }
 
-    public Task PublishAsync<T>(T @event, CancellationToken cancellationToken) where T : Event
+    public async Task PublishAsync<T>(T @event, CancellationToken cancellationToken) where T : Event
     {
         var topicName = @event.GetType().Name;
 
@@ -29,10 +29,10 @@ public class ServiceBus : IServiceBus
         // We need to make sure that we pass the concrete type to PublishEventAsync,
         // which can be accomplished by casting the event to dynamic. This ensures
         // that all event fields are properly serialized.
-        return dapr.PublishEventAsync(Constants.Dapr.MOVER_PUBSUB, topicName, (object)@event, cancellationToken);
+        await dapr.PublishEventAsync(Constants.Dapr.MOVER_PUBSUB, topicName, (object)@event, cancellationToken).ConfigureAwait(false);
     }
 
-    public Task SendAsync<T>(T command, CancellationToken cancellationToken) where T : Command
+    public async Task SendAsync<T>(T command, CancellationToken cancellationToken) where T : Command
     {
         var topicName = command.Name;
 
@@ -45,6 +45,6 @@ public class ServiceBus : IServiceBus
         // We need to make sure that we pass the concrete type to PublishEventAsync,
         // which can be accomplished by casting the event to dynamic. This ensures
         // that all event fields are properly serialized.
-        return dapr.PublishEventAsync(Constants.Dapr.MOVER_PUBSUB, topicName, (object)command, cancellationToken);
+        await dapr.PublishEventAsync(Constants.Dapr.MOVER_PUBSUB, topicName, (object)command, cancellationToken).ConfigureAwait(false);
     }
 }

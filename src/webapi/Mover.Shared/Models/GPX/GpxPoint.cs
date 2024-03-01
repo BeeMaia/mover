@@ -24,11 +24,11 @@ public class GpxPoint
     public string? Cmt { get; set; }
 
     [System.Xml.Serialization.XmlElement("desc")]
-    public string? Desc{get; set; }
+    public string? Desc { get; set; }
 
     [System.Xml.Serialization.XmlElement("src")]
     public string? Src { get; set; }
-    
+
     [System.Xml.Serialization.XmlElement("link")]
     public GpxLink[]? Link { get; set; }
 
