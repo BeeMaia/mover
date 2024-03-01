@@ -75,23 +75,10 @@ module serviceBus './reusable/servicebus.bicep' = {
     managedIdentityName: security.outputs.managedIdentityName
     topics: [
       'decodefit'
-      'fitdecoded'
-      'fitcreated'
-      'blobcreated'
+      'uploadfile'
+      'uploadedfit'
+      'uploadedgpx'
     ]
-  }
-}
-
-module eventgrid 'eventgrid.bicep' ={
-  name: 'eventgrid'
-  params: {
-    location: location
-    eventSubName: '${abbrs.eventGridEventSubscriptions}blobcreated'
-    storageAccountName: storage.outputs.name
-    serviceBusName: serviceBus.outputs.serviceBusName
-    serviceBusTopicName: 'blobcreated'
-    systemTopicName: '${abbrs.eventGridDomainsTopics}${resourceToken}'
-    managedIdentityName: security.outputs.managedIdentityName
   }
 }
 

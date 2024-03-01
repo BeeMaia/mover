@@ -10,7 +10,7 @@ public class GpxMetadataCopyright
 
     [System.Xml.Serialization.XmlElement("license")]
     public string? License { get; set; }
-    
+
     [System.Xml.Serialization.XmlAttribute("author")]
     public string? Author { get; set; }
 }

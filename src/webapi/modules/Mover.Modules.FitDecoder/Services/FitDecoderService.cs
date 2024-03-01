@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Mover.Modules.FitDecoder.Extensions;
 using Mover.Modules.FitDecoder.Interfaces;
 using Mover.Shared;
-using Mover.Shared.Extensions;
 using Mover.Shared.Interfaces;
 using Mover.Shared.Models.GPX;
 
@@ -21,7 +20,7 @@ public class FitDecoderService : IFitDecoderService
         logger = loggerFactory.CreateLogger(GetType());
     }
 
-    public async Task<string> DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken)
+    public async Task<Gpx> DecodeAsync(Guid rawId, string fileName, CancellationToken cancellationToken)
     {
         logger.LogInformation("Start decoding blob: {fileName}", fileName);
 
@@ -30,9 +29,7 @@ public class FitDecoderService : IFitDecoderService
 
         logger.LogInformation("Decoded blob: {fileName}", fileName);
 
-        var gpxFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.gpx";
-        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, gpxFileName, gpx.ToArray(), cancellationToken).ConfigureAwait(false);
-        return gpxFileName;
+        return gpx;
     }
 
     private static Gpx DecodeAsGPX(byte[] data)
@@ -43,7 +40,7 @@ public class FitDecoderService : IFitDecoderService
         {
             Version = (decimal)1.1,
             Creator = "Mover",
-            Trk = 
+            Trk =
             [
                 new GpxTrk
                 {

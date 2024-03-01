@@ -16,7 +16,7 @@ public class GpxMetadata
 
     [System.Xml.Serialization.XmlElement("copyright")]
     public GpxMetadataCopyright? Copyright { get; set; }
-    
+
     [System.Xml.Serialization.XmlElement("link")]
     public GpxLink[]? Link { get; set; }
 

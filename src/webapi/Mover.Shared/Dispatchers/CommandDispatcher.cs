@@ -8,7 +8,7 @@ public static class CommandDispatcher
 {
     public static async Task<IResult> DispatchAsync<TCommand>(TCommand command, ICommandHandler<TCommand> commandHandler, CancellationToken cancellationToken) where TCommand : Command
     {
-        await commandHandler.HandleAsync(command, cancellationToken);
+        await commandHandler.HandleAsync(command, cancellationToken).ConfigureAwait(false);
         return Results.NoContent();
     }
 }

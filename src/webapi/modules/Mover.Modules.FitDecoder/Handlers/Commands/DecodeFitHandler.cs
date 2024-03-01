@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Mover.Modules.FitDecoder.Interfaces;
 using Mover.Modules.FitDecoder.Shared.Commands;
-using Mover.Modules.FitDecoder.Shared.Events;
+using Mover.Modules.Uploader.Shared.Commands;
+using Mover.Shared;
+using Mover.Shared.Extensions;
 using Mover.Shared.Interfaces;
 
 namespace Mover.Modules.FitDecoder.Handlers.Commands;
@@ -17,7 +19,9 @@ public sealed class DecodeFitHandler : Mover.Shared.Handlers.CommandHandler<Deco
 
     public override async Task HandleAsync(DecodeFit command, CancellationToken cancellationToken)
     {
-        var gpxFileName = await fitDecoderService.DecodeAsync(command.RawId, command.FileName, cancellationToken).ConfigureAwait(false);
-        await ServiceBus.PublishAsync(new FitDecoded(command.RawId, gpxFileName), cancellationToken).ConfigureAwait(false);
+        var gpx = await fitDecoderService.DecodeAsync(command.RawId, command.FileName, cancellationToken).ConfigureAwait(false);
+        var gpxFileName = $"{Path.GetFileNameWithoutExtension(command.FileName)}{Constants.Extension.GPX}";
+
+        await ServiceBus.SendAsync(new UploadFile(gpxFileName, gpx.ToArray()), cancellationToken).ConfigureAwait(false);
     }
 }

@@ -18,9 +18,9 @@ public sealed class FitDecoderModule : IModule
             .Produces(StatusCodes.Status204NoContent)
             .WithName("DecodeFitCommand");
 
-        mapGroup.MapPost("/fitcreated", FitDecoderDispatcher.HandleFitCreatedAsync)
+        mapGroup.MapPost("/uploadedfit", FitDecoderDispatcher.HandleUploadedFitAsync)
             .Produces(StatusCodes.Status204NoContent)
-            .WithName("FitCreatedEvent");
+            .WithName("UploadedFitEvent");
     }
 
     public void MapEndpoints(IEndpointRouteBuilder endpoints)

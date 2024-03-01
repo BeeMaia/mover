@@ -1,24 +1,23 @@
 ﻿using Mover.Interfaces;
 
-namespace Mover.Modules
+namespace Mover.Modules;
+
+public class LoggingModule : IModule
 {
-    public class LoggingModule : IModule
+    public bool IsEnabled => true;
+
+    public int Order => 0;
+
+    public void MapDispatchers(IEndpointRouteBuilder endpoints)
     {
-        public bool IsEnabled => true;
+    }
 
-        public int Order => 0;
+    public void MapEndpoints(IEndpointRouteBuilder endpoints)
+    {
+    }
 
-        public void MapDispatchers(IEndpointRouteBuilder endpoints)
-        {
-        }
-
-        public void MapEndpoints(IEndpointRouteBuilder endpoints)
-        {
-        }
-
-        public void RegisterModule(WebApplicationBuilder builder)
-        {
-            builder.Services.AddApplicationInsightsTelemetry();
-        }
+    public void RegisterModule(WebApplicationBuilder builder)
+    {
+        builder.Services.AddApplicationInsightsTelemetry();
     }
 }
