@@ -63,6 +63,9 @@ module storage './reusable/storage-account.bicep' = {
       {
         name: 'gpx-files'
       }
+      {
+        name: 'raw-files'
+      }
     ]
   }
 }

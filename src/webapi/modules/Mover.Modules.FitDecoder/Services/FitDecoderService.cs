@@ -76,7 +76,7 @@ public class FitDecoderService : IFitDecoderService
 
         using (var fitStream = new MemoryStream(data))
         {
-            fitDecoder.Read(fitStream);
+            fitDecoder.Read(fitStream, DecodeMode.DataOnly);
         }
 
         return points;

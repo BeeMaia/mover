@@ -70,6 +70,37 @@ resource gpxBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@
   ]
 }
 
+resource rawBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
+  name: 'mover-rawblob'
+  parent: containerAppsEnvironment
+  properties: {
+    componentType: 'bindings.azure.blobstorage'
+    version: 'v1'
+    ignoreErrors: false
+    initTimeout: '5s'
+    metadata: [
+      {
+        name: 'accountName'
+        value: storageAccountName
+      }
+      {
+        name: 'containerName'
+        value: 'raw-files'
+      }
+      {
+        name: 'accountKey'
+        value: storageAccount.listKeys().keys[0].value
+      }
+    ]
+    scopes: [
+      containerAppName
+    ]
+  }
+  dependsOn: [
+    storageAccount
+  ]
+}
+
 resource pubsubDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
   name: 'mover-pubsub'
   parent: containerAppsEnvironment
