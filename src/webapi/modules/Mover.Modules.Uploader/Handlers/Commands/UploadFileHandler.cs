@@ -19,12 +19,12 @@ public sealed class UploadFileHandler : Mover.Shared.Handlers.CommandHandler<Upl
 
     public override async Task HandleAsync(UploadFile command, CancellationToken cancellationToken)
     {
-        var content = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_RAWBLOB, command.RawId.ToString(), cancellationToken).ConfigureAwait(false);
+        var content = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_RAWBLOB, command.FileName, cancellationToken);
 
-        var uploadedEvent = await uploaderService.UploadAsync(command.RawId, command.FileName, content, cancellationToken).ConfigureAwait(false);
+        var uploadedEvent = await uploaderService.UploadAsync(command.RawId, command.FileName, content, cancellationToken);
         if (uploadedEvent != null)
         {
-            await ServiceBus.PublishAsync(uploadedEvent, cancellationToken).ConfigureAwait(false);
+            await ServiceBus.PublishAsync(uploadedEvent, cancellationToken);
         }
     }
 }

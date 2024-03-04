@@ -7,6 +7,6 @@ spec:
   version: v1
   metadata:
     - name: rootPath
-      value: /temp/fit-files
+      value: /app/temp/fit-files/
     - name: direction
       value: output

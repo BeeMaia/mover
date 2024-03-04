@@ -7,6 +7,6 @@ spec:
   version: v1
   metadata:
     - name: rootPath
-      value: /temp/gpx-files
+      value: /app/temp/gpx-files/
     - name: direction
       value: output

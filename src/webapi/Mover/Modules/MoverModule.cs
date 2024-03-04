@@ -2,6 +2,7 @@
 using Mover.Shared;
 using Mover.Shared.Handlers;
 using Mover.Shared.Interfaces;
+using Mover.Shared.Models;
 using Mover.Shared.Repositories;
 
 namespace Mover.Modules;
@@ -26,6 +27,7 @@ public sealed class MoverModule : IModule
     {
         builder.Services.AddSingleton<ValidationHandler>();
         builder.Services.AddScoped<IServiceBus, ServiceBus>();
-        builder.Services.AddScoped<IBlobRepository, BlobRepository>();
+        builder.Services.AddScoped<IBlobRepository, BlobRepository>()
+            .Configure<BlobOptions>(builder.Configuration.GetSection(nameof(BlobOptions)));
     }
 }

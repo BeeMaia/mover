@@ -15,6 +15,6 @@ public class UploaderService : IUploaderService
 
     public async Task<Event?> UploadAsync(Guid rawId, string fileName, byte[] content, CancellationToken cancellationToken)
     {
-        return await uploadContext.UploadAsync(rawId, fileName, content, cancellationToken).ConfigureAwait(false);
+        return await uploadContext.UploadAsync(rawId, fileName, content, cancellationToken);
     }
 }

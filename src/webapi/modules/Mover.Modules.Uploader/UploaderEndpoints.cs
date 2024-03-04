@@ -11,7 +11,7 @@ public class UploaderEndpoints
         if (file == null || file.Length == 0)
             return Results.BadRequest("File is empty");
 
-        await uploaderOrchestrator.UploadAsync(file, cancellationToken).ConfigureAwait(false);
+        await uploaderOrchestrator.UploadAsync(file, cancellationToken);
 
         return Results.Accepted();
     }

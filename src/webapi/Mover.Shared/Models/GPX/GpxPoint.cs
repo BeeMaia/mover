@@ -41,7 +41,7 @@ public class GpxPoint
     [System.Xml.Serialization.XmlElement("fix")]
     public string? Fix { get; set; }
 
-    [System.Xml.Serialization.XmlElement("sat", DataType = "integer")]
+    [System.Xml.Serialization.XmlElement("sat")]
     public int Sat { get; set; }
 
     [System.Xml.Serialization.XmlElement("hdop")]

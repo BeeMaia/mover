@@ -1,5 +1,5 @@
 ﻿namespace Mover.Shared.Models;
 
-public class AppSettings
+public class AppOptions
 {
 }

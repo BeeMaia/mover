@@ -9,7 +9,7 @@ public sealed class ValidationHandler
 
     public async Task ValidateAsync<T>(IValidator<T> validator, T validateMe) where T : class
     {
-        var validationResult = await validator.ValidateAsync(validateMe).ConfigureAwait(false);
+        var validationResult = await validator.ValidateAsync(validateMe);
         IsValid = validationResult.IsValid;
         if (validationResult.IsValid)
         {

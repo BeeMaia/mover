@@ -68,6 +68,7 @@ resource app 'Microsoft.App/containerApps@2022-10-01' = {
         appProtocol: daprAppProtocol
         appPort: targetPort
         enableApiLogging: true
+        httpMaxRequestSize: 8
       }
       registries: [
         {

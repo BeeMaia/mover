@@ -1,10 +1,13 @@
-﻿namespace Mover.Shared.Models.GPX;
+﻿using System.Xml.Serialization;
+
+namespace Mover.Shared.Models.GPX;
 
 [Serializable()]
 [System.ComponentModel.DesignerCategory("code")]
-[System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://www.topografix.com/GPX/1/1")]
+[XmlType(AnonymousType = true, Namespace = "http://www.topografix.com/GPX/1/1")]
+[XmlInclude(typeof(GpxTrkTrkptExtensions))]
 public class GpxTrkTrkptExtensions
 {
-    [System.Xml.Serialization.XmlElement("trkptextension")]
+    [XmlElement("trkptextension")]
     public TrackPointExtension? TrackPointExtension { get; set; }
 }

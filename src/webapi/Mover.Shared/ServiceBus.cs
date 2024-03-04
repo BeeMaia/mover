@@ -18,7 +18,7 @@ public class ServiceBus : IServiceBus
 
     public async Task PublishAsync<T>(T @event, CancellationToken cancellationToken) where T : Event
     {
-        var topicName = @event.GetType().Name;
+        var topicName = @event.GetType().Name.ToLower();
 
         logger.LogInformation(
             "Publishing event {@Event} to {PubsubName}.{TopicName}",
@@ -29,12 +29,12 @@ public class ServiceBus : IServiceBus
         // We need to make sure that we pass the concrete type to PublishEventAsync,
         // which can be accomplished by casting the event to dynamic. This ensures
         // that all event fields are properly serialized.
-        await dapr.PublishEventAsync(Constants.Dapr.MOVER_PUBSUB, topicName, (object)@event, cancellationToken).ConfigureAwait(false);
+        await dapr.PublishEventAsync(Constants.Dapr.MOVER_PUBSUB, topicName, (object)@event, cancellationToken);
     }
 
     public async Task SendAsync<T>(T command, CancellationToken cancellationToken) where T : Command
     {
-        var topicName = command.Name;
+        var topicName = command.Name.ToLower();
 
         logger.LogInformation(
             "Send command {Command} to {PubsubName}.{TopicName}",
@@ -45,6 +45,6 @@ public class ServiceBus : IServiceBus
         // We need to make sure that we pass the concrete type to PublishEventAsync,
         // which can be accomplished by casting the event to dynamic. This ensures
         // that all event fields are properly serialized.
-        await dapr.PublishEventAsync(Constants.Dapr.MOVER_PUBSUB, topicName, (object)command, cancellationToken).ConfigureAwait(false);
+        await dapr.PublishEventAsync(Constants.Dapr.MOVER_PUBSUB, topicName, (object)command, cancellationToken);
     }
 }

@@ -24,7 +24,7 @@ public class FitDecoderService : IFitDecoderService
     {
         logger.LogInformation("Start decoding blob: {fileName}", fileName);
 
-        var data = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_FITBLOB, fileName, cancellationToken).ConfigureAwait(false);
+        var data = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_FITBLOB, fileName, cancellationToken);
         var gpx = DecodeAsGPX(fileName, data);
 
         logger.LogInformation("Decoded blob: {fileName}", fileName);

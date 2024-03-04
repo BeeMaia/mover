@@ -7,6 +7,6 @@ spec:
   version: v1
   metadata:
     - name: rootPath
-      value: /temp/raw-files
+      value: /app/temp/raw-files/
     - name: direction
       value: output

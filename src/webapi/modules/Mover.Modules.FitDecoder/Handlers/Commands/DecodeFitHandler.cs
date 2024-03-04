@@ -21,11 +21,11 @@ public sealed class DecodeFitHandler : Mover.Shared.Handlers.CommandHandler<Deco
 
     public override async Task HandleAsync(DecodeFit command, CancellationToken cancellationToken)
     {
-        var gpx = await fitDecoderService.DecodeAsync(command.RawId, command.FileName, cancellationToken).ConfigureAwait(false);
+        var gpx = await fitDecoderService.DecodeAsync(command.RawId, command.FileName, cancellationToken);
         var gpxFileName = $"{Path.GetFileNameWithoutExtension(command.FileName)}{Constants.Extension.GPX}";
 
-        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, gpxFileName, gpx.ToArray(), cancellationToken).ConfigureAwait(false);
+        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, gpxFileName, gpx.ToArray(), cancellationToken);
 
-        await ServiceBus.PublishAsync(new UploadedGpx(gpxFileName, command.RawId), cancellationToken).ConfigureAwait(false);
+        await ServiceBus.PublishAsync(new UploadedGpx(gpxFileName, command.RawId), cancellationToken);
     }
 }

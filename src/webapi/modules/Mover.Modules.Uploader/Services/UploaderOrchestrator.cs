@@ -22,12 +22,12 @@ public class UploaderOrchestrator
         var fileName = $"{rawId}_{file.FileName}";
 
         using var stream = new MemoryStream();
-        await file.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+        await file.CopyToAsync(stream, cancellationToken);
         stream.Position = 0;
         var content = stream.ToArray();
 
-        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_RAWBLOB, rawId.ToString(), content, cancellationToken).ConfigureAwait(false);
+        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_RAWBLOB, fileName, content, cancellationToken);
 
-        await serviceBus.SendAsync(new UploadFile(rawId, fileName), cancellationToken).ConfigureAwait(false);
+        await serviceBus.SendAsync(new UploadFile(rawId, fileName), cancellationToken);
     }
 }

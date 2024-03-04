@@ -19,7 +19,7 @@ public class GpxStrategy : IUploadStrategy
 
     public async Task<Event> UploadAsync(Guid rawId, string fileName, byte[] content, CancellationToken cancellationToken)
     {
-        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, fileName, content, cancellationToken).ConfigureAwait(false);
+        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, fileName, content, cancellationToken);
         return new UploadedGpx(fileName, rawId);
     }
 }

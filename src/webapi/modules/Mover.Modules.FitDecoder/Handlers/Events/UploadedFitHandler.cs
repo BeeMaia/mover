@@ -18,6 +18,6 @@ public sealed class UploadedFitHandler : Mover.Shared.Handlers.EventHandler<Uplo
     {
         Logger.LogInformation("Handle Event {@Event}", @event);
 
-        await serviceBus.SendAsync(new DecodeFit(@event.RawId, @event.FileName), cancellationToken).ConfigureAwait(false);
+        await serviceBus.SendAsync(new DecodeFit(@event.RawId, @event.FileName), cancellationToken);
     }
 }

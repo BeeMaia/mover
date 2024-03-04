@@ -8,7 +8,7 @@ public static class GpxExtensions
     public static byte[] ToArray(this Gpx gpx)
     {
         MemoryStream memoryStream = new();
-        XmlSerializer xmlSerializer = new(typeof(Gpx));
+        XmlSerializer xmlSerializer = new(typeof(Gpx), [typeof(GpxTrkTrkptExtensions)]);
         xmlSerializer.Serialize(memoryStream, gpx);
         memoryStream.Position = 0;
 

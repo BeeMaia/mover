@@ -19,7 +19,7 @@ public class FitStrategy : IUploadStrategy
 
     public async Task<Event> UploadAsync(Guid rawId, string fileName, byte[] content, CancellationToken cancellationToken)
     {
-        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_FITBLOB, fileName, content, cancellationToken).ConfigureAwait(false);
+        await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_FITBLOB, fileName, content, cancellationToken);
         return new UploadedFit(fileName, rawId);
     }
 }

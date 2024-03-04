@@ -20,7 +20,7 @@ public class GpxRte
     [System.Xml.Serialization.XmlElement("link")]
     public GpxLink[]? Link { get; set; }
 
-    [System.Xml.Serialization.XmlElement("number", DataType = "integer")]
+    [System.Xml.Serialization.XmlElement("number")]
     public int? Number { get; set; }
 
     [System.Xml.Serialization.XmlElement("type")]

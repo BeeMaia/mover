@@ -18,7 +18,7 @@ public class UploadContext
 
         if (instance is not null)
         {
-            return await instance.UploadAsync(rawId, fileName, content, cancellationToken).ConfigureAwait(false);
+            return await instance.UploadAsync(rawId, fileName, content, cancellationToken);
         }
 
         return null;

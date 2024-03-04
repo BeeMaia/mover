@@ -4,6 +4,8 @@ metadata:
   name: mover-pubsub
   namespace: mover
 spec:
-  type: pubsub.in-memory
+  type: pubsub.rabbitmq
   version: v1
-  metadata: []
+  metadata:
+    - name: connectionString
+      value: "amqp://maia:beta80.1@rabbit:5672"
