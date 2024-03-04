@@ -25,6 +25,5 @@ RUN dotnet publish "./Mover.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:U
 
 FROM base AS final
 WORKDIR /app
-RUN chmod 777 /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Mover.dll"]
