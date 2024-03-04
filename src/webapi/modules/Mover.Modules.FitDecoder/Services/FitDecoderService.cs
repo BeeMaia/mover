@@ -25,16 +25,16 @@ public class FitDecoderService : IFitDecoderService
         logger.LogInformation("Start decoding blob: {fileName}", fileName);
 
         var data = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_FITBLOB, fileName, cancellationToken).ConfigureAwait(false);
-        var gpx = DecodeAsGPX(data);
+        var gpx = DecodeAsGPX(fileName, data);
 
         logger.LogInformation("Decoded blob: {fileName}", fileName);
 
         return gpx;
     }
 
-    private static Gpx DecodeAsGPX(byte[] data)
+    private Gpx DecodeAsGPX(string fileName, byte[] data)
     {
-        var points = ParseFitData(data);
+        var points = ParseFitData(fileName, data);
 
         return new Gpx
         {
@@ -53,7 +53,7 @@ public class FitDecoderService : IFitDecoderService
         };
     }
 
-    private static List<GpxPoint> ParseFitData(byte[] data)
+    private List<GpxPoint> ParseFitData(string fileName, byte[] data)
     {
         var points = new List<GpxPoint>();
 
@@ -74,9 +74,45 @@ public class FitDecoderService : IFitDecoderService
 
         fitDecoder.MesgEvent += mesgBroadcaster.OnMesg;
 
-        using (var fitStream = new MemoryStream(data))
+        using var fitStream = new MemoryStream(data);
+        var status = fitDecoder.IsFIT(fitStream);
+        status &= fitDecoder.CheckIntegrity(fitStream);
+
+        // Process the file
+        try
         {
-            fitDecoder.Read(fitStream, DecodeMode.InvalidHeader);
+            if (status)
+            {
+                logger.LogInformation("Decoding...");
+                fitDecoder.Read(fitStream);
+                logger.LogInformation($"Decoded FIT file ");
+            }
+            else
+            {
+                try
+                {
+                    logger.LogWarning($"Integrity Check Failed {fileName}");
+                    if (fitDecoder.InvalidDataSize)
+                    {
+                        logger.LogInformation("Invalid Size Detected, Attempting to decode...");
+                        fitDecoder.Read(fitStream);
+                    }
+                    else
+                    {
+                        logger.LogInformation("Attempting to decode by skipping the header...");
+                        fitDecoder.Read(fitStream, DecodeMode.InvalidHeader);
+                    }
+                }
+                catch (FitException ex)
+                {
+                    logger.LogError($"DecodeDemo caught FitException: {ex.Message}");
+                    throw;
+                }
+            }
+        }
+        finally
+        {
+            fitStream.Close();
         }
 
         return points;

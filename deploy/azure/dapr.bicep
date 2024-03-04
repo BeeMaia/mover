@@ -25,6 +25,10 @@ resource fitBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@
         name: 'accountKey'
         value: storageAccount.listKeys().keys[0].value
       }
+      {
+        name: 'decodeBase64'
+        value: 'true'
+      }
     ]
     scopes: [
       containerAppName
@@ -90,6 +94,10 @@ resource rawBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@
       {
         name: 'accountKey'
         value: storageAccount.listKeys().keys[0].value
+      }
+      {
+        name: 'decodeBase64'
+        value: 'true'
       }
     ]
     scopes: [
