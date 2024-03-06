@@ -25,9 +25,9 @@ module app './reusable/container-app.bicep' = {
       }
     ]
     imageName: !empty(imageName) ? imageName : 'nginx:latest'
-    daprEnabled: true
+    daprEnabled: false
     containerName: serviceName
-    targetPort: 8080
+    targetPort: 80
     managedIdentityEnabled: true
     managedIdentityName: managedIdentityName
   }
@@ -41,5 +41,3 @@ output SERVICE_API_IDENTITY_PRINCIPAL_ID string = app.outputs.identityPrincipalI
 output SERVICE_API_NAME string = app.outputs.name
 output SERVICE_API_URI string = app.outputs.uri
 output SERVICE_API_IMAGE_NAME string = app.outputs.imageName
-
-

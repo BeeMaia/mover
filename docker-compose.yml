@@ -1,21 +1,21 @@
 version: "3.4"
 
 services:
-  #frontend:
-  #    container_name: frontend
-  #    image: ${DOCKER_REGISTRY-}frontend:${PLATFORM:-linux}-${TAG:-latest}
-  #    build:
-  #        context: src/webapp/mover/
-  #        dockerfile: Dockerfile
-  #    depends_on:
-  #        - envoy
+  frontend:
+    container_name: mover-fe
+    image: ${DOCKER_REGISTRY-}mover-fe:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: src/webapp/mover/
+      dockerfile: Dockerfile
+    depends_on:
+      - envoy
 
   mover-api:
     container_name: mover-api
     image: ${DOCKER_REGISTRY-}moverapi:${PLATFORM:-linux}-${TAG:-latest}
     build:
-      context: .
-      dockerfile: src/webapi/Mover/Dockerfile
+      context: src/webapi/
+      dockerfile: Dockerfile
     depends_on:
       - rabbitmq
 
@@ -30,3 +30,14 @@ services:
   rabbitmq:
     container_name: rabbit
     image: rabbitmq:3-management-alpine
+
+  envoy:
+    container_name: envoy
+    image: envoyproxy/envoy-alpine:v1.21-latest
+
+  envoy-dapr:
+    container_name: envoy-dapr
+    image: "daprio/daprd:1.10.6"
+    network_mode: "service:envoy"
+    depends_on:
+      - envoy

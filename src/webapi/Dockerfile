@@ -6,6 +6,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Mover/Mover.csproj", "Mover/"]
 COPY ["modules/Mover.Modules.FitDecoder/Mover.Modules.FitDecoder.csproj", "modules/Mover.Modules.FitDecoder/"]
@@ -15,11 +16,12 @@ COPY ["modules/Mover.Modules.Uploader.Shared/Mover.Modules.Uploader.Shared.cspro
 COPY ["modules/Mover.Modules.Uploader/Mover.Modules.Uploader.csproj", "modules/Mover.Modules.Uploader/"]
 RUN dotnet restore "./Mover/Mover.csproj"
 COPY . .
-WORKDIR /src/Mover
-RUN dotnet build "./Mover.csproj" -c Release -o /app/build
+WORKDIR "/src/Mover"
+RUN dotnet build "./Mover.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./Mover.csproj" -c Release -o /app/publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./Mover.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

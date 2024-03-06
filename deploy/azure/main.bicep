@@ -11,8 +11,12 @@ param registryName string
 @description('The image name for the api service')
 param apiImageName string 
 
+@description('The image name for the frontend service')
+param feImageName string 
+
 var appName = 'mover'
 var apiServiceName = 'api'
+var frontEndServiceName = 'frontend'
 var resourceToken = toLower('${appName}${environment}')
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = {}
@@ -109,4 +113,18 @@ module api 'api.bicep' = {
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
   dependsOn:[dapr]
+}
+
+module frontend 'frontend.bicep' = {
+  name: frontEndServiceName
+  params: {
+    name: '${abbrs.appContainerApps}${frontEndServiceName}-${resourceToken}'
+    location: location
+    imageName: feImageName
+    containerAppsEnvironmentName: appEnv.outputs.environmentName
+    containerRegistryName: registryName
+    serviceName: frontEndServiceName
+    managedIdentityName: security.outputs.managedIdentityName
+    applicationInsightsName: monitoring.outputs.applicationInsightsName
+  }
 }

@@ -1,9 +1,9 @@
-version: "3.4"
+version: "3.8"
 
 services:
-  #frontend:
-  #    ports:
-  #      - "8081:80"
+  frontend:
+    ports:
+      - "8081:80"
 
   mover-api:
     environment:
@@ -36,6 +36,26 @@ services:
       - "./src/webapi/Mover/temp/raw-files/:/app/temp/raw-files/"
       - "./src/webapi/Mover/temp/fit-files/:/app/temp/fit-files/"
       - "./src/webapi/Mover/temp/gpx-files/:/app/temp/gpx-files/"
+
+  envoy:
+    volumes:
+      - ./src/apigateways/envoy:/etc/envoy
+    ports:
+      - "10000:10000"
+
+  envoy-dapr:
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "envoy",
+        "-app-port",
+        "10000",
+        "-components-path",
+        "/components",
+      ]
+    volumes:
+      - "./dapr/components/:/components"
 
   rabbitmq:
     environment:
