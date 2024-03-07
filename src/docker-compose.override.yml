@@ -1,0 +1,131 @@
+version: "3.8"
+
+services:
+  frontend:
+    ports:
+      - "8081:80"
+
+  mover-fitdecoder:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PATH_BASE=/mover-fitdecoder
+      - PORT=80
+    ports:
+      - "5103:80"
+    volumes:
+      - "./services/temp/:/app/temp"
+
+  mover-fitdecoder-dapr:
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "mover-fitdecoder",
+        "-app-port",
+        "80",
+        "-log-level",
+        "debug",
+        "-components-path",
+        "/components",
+        "-dapr-http-max-request-size",
+        "8",
+      ]
+    volumes:
+      - "../dapr/components/local/:/components"
+      - "../dapr/config/:/config"
+      - "./services/temp/:/app/temp"
+
+  mover-stats:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PATH_BASE=/mover-stats
+      - PORT=80
+    ports:
+      - "5104:80"
+    volumes:
+      - "./services/temp/:/app/temp"
+
+  mover-stats-dapr:
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "mover-stats",
+        "-app-port",
+        "80",
+        "-log-level",
+        "debug",
+        "-components-path",
+        "/components",
+        "-dapr-http-max-request-size",
+        "8",
+      ]
+    volumes:
+      - "../dapr/components/local/:/components"
+      - "../dapr/config/:/config"
+      - "./services/temp/:/app/temp"
+
+  mover-uploader:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - PATH_BASE=/mover-uploader
+      - PORT=80
+    ports:
+      - "5105:80"
+    volumes:
+      - "./services/temp/:/app/temp"
+
+  mover-uploader-dapr:
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "mover-uploader",
+        "-app-port",
+        "80",
+        "-log-level",
+        "debug",
+        "-components-path",
+        "/components",
+        "-dapr-http-max-request-size",
+        "8",
+      ]
+    volumes:
+      - "../dapr/components/local/:/components"
+      - "../dapr/config/:/config"
+      - "./services/temp/:/app/temp"
+
+  envoy:
+    volumes:
+      - ./apigateways/envoy:/etc/envoy
+    ports:
+      - "10000:10000"
+
+  envoy-dapr:
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "envoy",
+        "-app-port",
+        "10000",
+        "-components-path",
+        "/components",
+      ]
+    volumes:
+      - "../dapr/components/:/components"
+
+  rabbitmq:
+    environment:
+      RABBITMQ_DEFAULT_USER: "maia"
+      RABBITMQ_DEFAULT_PASS: "beta80.1"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./storage/rabbitmqdata/lib/:/var/lib/rabbitmq/
+      - ./storage/rabbitmqdata/log/:/var/log/rabbitmq/

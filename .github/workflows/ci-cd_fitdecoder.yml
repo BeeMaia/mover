@@ -1,0 +1,16 @@
+name: 2. Build and Publish FitDecoder to Registry
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - src/services/Mover.FitDecoder/**
+      - src/shared/**
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+jobs:
+  ci-cd:
+    uses: ./.github/workflows/build-publish.yml
+    with:
+      context: ./src/services/Mover.FitDecoder
+      image-name: mover-fitdecoder

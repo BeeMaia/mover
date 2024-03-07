@@ -1,0 +1,16 @@
+name: 2. Build and Publish Stats to Registry
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - src/services/Mover.Stats/**
+      - src/shared/**
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+jobs:
+  ci-cd:
+    uses: ./.github/workflows/build-publish.yml
+    with:
+      context: ./src/services/Mover.Stats
+      image-name: mover-stats

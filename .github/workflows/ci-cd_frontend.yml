@@ -1,0 +1,15 @@
+name: 2. Build and Publish FrontEnd to Registry
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - src/frontend/mover/**
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+jobs:
+  ci-cd:
+    uses: ./.github/workflows/build-publish.yml
+    with:
+      context: ./src/frontend/mover
+      image-name: mover-fe

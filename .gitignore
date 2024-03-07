@@ -396,5 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/src/webapi/Mover/temp/*
-/storage/rabbitmqdata/*
+/src/webapi/Mover/temp
+/storage/rabbitmqdata
+/src/services/temp
+/src/storage/rabbitmqdata

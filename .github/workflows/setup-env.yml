@@ -21,6 +21,6 @@ jobs:
             az bicep install
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/azure/main.bicep \
               -p \
-                apiImageName='mover-api:main' \
-                feImageName='mover-fe:main' \
+                imagesUploader='("mover-uploader:main", "mover-stats:main", "mover-fitdecoder:main")' \
+                imagesWithoutDapr='("mover-fe:main")' \
                 registryName='crmoverdev'

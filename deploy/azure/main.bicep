@@ -8,15 +8,11 @@ param environment string = 'dev'
 
 param registryName string
 
-@description('The image name for the api service')
-param apiImageName string 
-
-@description('The image name for the frontend service')
-param feImageName string 
-
 var appName = 'mover'
-var apiServiceName = 'api'
-var frontEndServiceName = 'frontend'
+var uploaderSN = 'uploader'
+var statsSN = 'stats'
+var fitdecoderSN = 'fitdecoder'
+var frontendSN = 'frontend'
 var resourceToken = toLower('${appName}${environment}')
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = {}
@@ -85,45 +81,99 @@ module serviceBus './reusable/servicebus.bicep' = {
       'uploadfile'
       'uploadedfit'
       'uploadedgpx'
+      'writestats'
+      'wrotestats'
     ]
   }
 }
 
-module dapr 'dapr.bicep' = {
-  name: 'daprComponents'
+module uploaderDapr 'dapr.bicep' = {
+  name: 'uploaderDapr'
   params: {
     containerAppsEnvironmentName: appEnv.outputs.environmentName
     managedIdentityName: security.outputs.managedIdentityName
     storageAccountName: storage.outputs.name
     serviceBusName: serviceBus.outputs.serviceBusName 
-    containerAppName: apiServiceName
+    containerAppName: uploaderSN
   }
 }
 
-module api 'api.bicep' = {
-  name: apiServiceName
+module uploader 'api.bicep' = {
+  name: uploaderSN
   params: {
-    name: '${abbrs.appContainerApps}${apiServiceName}-${resourceToken}'
+    name: '${abbrs.appContainerApps}${uploaderSN}-${resourceToken}'
     location: location
-    imageName: apiImageName
+    imageName: 'mover-uploader:main'
     containerAppsEnvironmentName: appEnv.outputs.environmentName
     containerRegistryName: registryName
-    serviceName: apiServiceName
+    serviceName: uploaderSN
     managedIdentityName: security.outputs.managedIdentityName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
-  dependsOn:[dapr]
+  dependsOn:[uploaderDapr]
+}
+
+module fitdecoderDapr 'dapr.bicep' = {
+  name: 'fitdecoderDapr'
+  params: {
+    containerAppsEnvironmentName: appEnv.outputs.environmentName
+    managedIdentityName: security.outputs.managedIdentityName
+    storageAccountName: storage.outputs.name
+    serviceBusName: serviceBus.outputs.serviceBusName 
+    containerAppName: fitdecoderSN
+  }
+}
+
+module fitdecoder 'api.bicep' = {
+  name: fitdecoderSN
+  params: {
+    name: '${abbrs.appContainerApps}${fitdecoderSN}-${resourceToken}'
+    location: location
+    imageName: 'mover-fitdecoder:main'
+    containerAppsEnvironmentName: appEnv.outputs.environmentName
+    containerRegistryName: registryName
+    serviceName: fitdecoderSN
+    managedIdentityName: security.outputs.managedIdentityName
+    applicationInsightsName: monitoring.outputs.applicationInsightsName
+  }
+  dependsOn:[fitdecoderDapr]
+}
+
+module statsDapr 'dapr.bicep' = {
+  name: 'statsDapr'
+  params: {
+    containerAppsEnvironmentName: appEnv.outputs.environmentName
+    managedIdentityName: security.outputs.managedIdentityName
+    storageAccountName: storage.outputs.name
+    serviceBusName: serviceBus.outputs.serviceBusName 
+    containerAppName: statsSN
+  }
+}
+
+module stats 'api.bicep' = {
+  name: statsSN
+  params: {
+    name: '${abbrs.appContainerApps}${statsSN}-${resourceToken}'
+    location: location
+    imageName: 'mover-stats:main'
+    containerAppsEnvironmentName: appEnv.outputs.environmentName
+    containerRegistryName: registryName
+    serviceName: statsSN
+    managedIdentityName: security.outputs.managedIdentityName
+    applicationInsightsName: monitoring.outputs.applicationInsightsName
+  }
+  dependsOn:[statsDapr]
 }
 
 module frontend 'frontend.bicep' = {
-  name: frontEndServiceName
+  name: frontendSN
   params: {
-    name: '${abbrs.appContainerApps}${frontEndServiceName}-${resourceToken}'
+    name: '${abbrs.appContainerApps}${frontendSN}-${resourceToken}'
     location: location
-    imageName: feImageName
+    imageName: 'mover-fe:main'
     containerAppsEnvironmentName: appEnv.outputs.environmentName
     containerRegistryName: registryName
-    serviceName: frontEndServiceName
+    serviceName: frontendSN
     managedIdentityName: security.outputs.managedIdentityName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
