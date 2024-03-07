@@ -14,3 +14,4 @@ jobs:
     with:
       context: ./src/services/Mover.FitDecoder
       image-name: mover-fitdecoder
+    secrets: inherit

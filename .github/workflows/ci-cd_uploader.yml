@@ -14,3 +14,4 @@ jobs:
     with:
       context: ./src/services/Mover.Uploader
       image-name: mover-uploader
+    secrets: inherit

@@ -13,3 +13,4 @@ jobs:
     with:
       context: ./src/frontend/mover
       image-name: mover-fe
+    secrets: inherit

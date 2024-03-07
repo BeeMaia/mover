@@ -14,3 +14,4 @@ jobs:
     with:
       context: ./src/services/Mover.Stats
       image-name: mover-stats
+    secrets: inherit

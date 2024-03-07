@@ -11,7 +11,13 @@ on:
         description: "Docker context"
         required: true
         type: string
-    secrets: inherit
+    secrets:
+      REGISTRY_LOGINURL:
+        required: true
+      REGISTRY_USERNAME:
+        required: true
+      REGISTRY_PASSWORD:
+        required: true
 
 jobs:
   build:
