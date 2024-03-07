@@ -8,13 +8,13 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Mover.Stats.csproj", "Services/Mover.Stats/"]
+COPY ["Mover.Stats.csproj", "services/Mover.Stats/"]
 COPY ["../../shared/Mover.Stats.Shared/Mover.Stats.Shared.csproj", "shared/Mover.Stats.Shared/"]
 COPY ["../../shared/Mover.Shared/Mover.Shared.csproj", "shared/Mover.Shared/"]
 COPY ["../../shared/Mover.Uploader.Shared/Mover.Uploader.Shared.csproj", "shared/Mover.Uploader.Shared/"]
-RUN dotnet restore "./Services/Mover.Stats/Mover.Stats.csproj"
+RUN dotnet restore "./services/Mover.Stats/Mover.Stats.csproj"
 COPY . .
-WORKDIR "/src/Services/Mover.Stats"
+WORKDIR "/src/services/Mover.Stats"
 RUN dotnet build "./Mover.Stats.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

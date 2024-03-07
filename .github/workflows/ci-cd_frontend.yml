@@ -12,5 +12,6 @@ jobs:
     uses: ./.github/workflows/build-publish.yml
     with:
       context: ./src/frontend/mover
+      dockerfile: Dockerfile
       image-name: mover-fe
     secrets: inherit

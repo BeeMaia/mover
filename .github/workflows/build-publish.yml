@@ -11,6 +11,10 @@ on:
         description: "Docker context"
         required: true
         type: string
+      dockerfile:
+        description: "Docker file"
+        required: true
+        type: string
     secrets:
       REGISTRY_LOGINURL:
         required: true
@@ -49,6 +53,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ${{ inputs.context }}
+          file: ${{ inputs.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
