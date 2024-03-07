@@ -13,6 +13,6 @@ jobs:
     uses: ./.github/workflows/build-publish.yml
     with:
       context: ./src
-      dockerfile: services/Mover.Stats/Dockerfile
+      dockerfile: src/services/Mover.Stats/Dockerfile
       image-name: mover-stats
     secrets: inherit
