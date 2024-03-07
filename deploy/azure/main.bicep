@@ -87,14 +87,18 @@ module serviceBus './reusable/servicebus.bicep' = {
   }
 }
 
-module uploaderDapr 'dapr.bicep' = {
-  name: 'uploaderDapr'
+module dapr 'dapr.bicep' = {
+  name: 'dapr'
   params: {
     containerAppsEnvironmentName: appEnv.outputs.environmentName
     managedIdentityName: security.outputs.managedIdentityName
     storageAccountName: storage.outputs.name
     serviceBusName: serviceBus.outputs.serviceBusName 
-    containerAppName: uploaderSN
+    scopes: [
+      uploaderSN
+      fitdecoderSN
+      statsSN
+    ]
   }
 }
 
@@ -110,18 +114,7 @@ module uploader 'api.bicep' = {
     managedIdentityName: security.outputs.managedIdentityName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
-  dependsOn:[uploaderDapr]
-}
-
-module fitdecoderDapr 'dapr.bicep' = {
-  name: 'fitdecoderDapr'
-  params: {
-    containerAppsEnvironmentName: appEnv.outputs.environmentName
-    managedIdentityName: security.outputs.managedIdentityName
-    storageAccountName: storage.outputs.name
-    serviceBusName: serviceBus.outputs.serviceBusName 
-    containerAppName: fitdecoderSN
-  }
+  dependsOn:[dapr]
 }
 
 module fitdecoder 'api.bicep' = {
@@ -136,18 +129,7 @@ module fitdecoder 'api.bicep' = {
     managedIdentityName: security.outputs.managedIdentityName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
-  dependsOn:[fitdecoderDapr]
-}
-
-module statsDapr 'dapr.bicep' = {
-  name: 'statsDapr'
-  params: {
-    containerAppsEnvironmentName: appEnv.outputs.environmentName
-    managedIdentityName: security.outputs.managedIdentityName
-    storageAccountName: storage.outputs.name
-    serviceBusName: serviceBus.outputs.serviceBusName 
-    containerAppName: statsSN
-  }
+  dependsOn:[dapr]
 }
 
 module stats 'api.bicep' = {
@@ -162,7 +144,7 @@ module stats 'api.bicep' = {
     managedIdentityName: security.outputs.managedIdentityName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
-  dependsOn:[statsDapr]
+  dependsOn:[dapr]
 }
 
 module frontend 'frontend.bicep' = {

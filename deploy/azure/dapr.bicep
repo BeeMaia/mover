@@ -2,7 +2,7 @@ param managedIdentityName string
 param containerAppsEnvironmentName string 
 param storageAccountName string
 param serviceBusName string
-param containerAppName string
+param scopes string[]
 
 resource fitBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
   name: 'mover-fitblob'
@@ -30,9 +30,7 @@ resource fitBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@
         value: 'true'
       }
     ]
-    scopes: [
-      containerAppName
-    ]
+    scopes: scopes
   }
   dependsOn: [
     storageAccount
@@ -65,9 +63,7 @@ resource gpxBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@
         value: 'true'
       }
     ]
-    scopes: [
-      containerAppName
-    ]
+    scopes: scopes
   }
   dependsOn: [
     storageAccount
@@ -100,9 +96,7 @@ resource rawBlobDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@
         value: 'true'
       }
     ]
-    scopes: [
-      containerAppName
-    ]
+    scopes: scopes
   }
   dependsOn: [
     storageAccount
@@ -127,9 +121,7 @@ resource pubsubDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2
         value: managedIdentity.properties.clientId
       }
     ]
-    scopes: [
-      containerAppName
-    ]
+    scopes: scopes
   }
   dependsOn: [
     serviceBusNamespace
