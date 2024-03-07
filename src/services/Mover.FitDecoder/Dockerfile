@@ -8,10 +8,10 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Mover.FitDecoder.csproj", "services/Mover.FitDecoder/"]
-COPY ["../../shared/Mover.FitDecoder.Shared/Mover.FitDecoder.Shared.csproj", "shared/Mover.FitDecoder.Shared/"]
-COPY ["../../shared/Mover.Shared/Mover.Shared.csproj", "shared/Mover.Shared/"]
-COPY ["../../shared/Mover.Uploader.Shared/Mover.Uploader.Shared.csproj", "shared/Mover.Uploader.Shared/"]
+COPY ["services/Mover.FitDecoder/Mover.FitDecoder.csproj", "services/Mover.FitDecoder/"]
+COPY ["shared/Mover.FitDecoder.Shared/Mover.FitDecoder.Shared.csproj", "shared/Mover.FitDecoder.Shared/"]
+COPY ["shared/Mover.Shared/Mover.Shared.csproj", "shared/Mover.Shared/"]
+COPY ["shared/Mover.Uploader.Shared/Mover.Uploader.Shared.csproj", "shared/Mover.Uploader.Shared/"]
 RUN dotnet restore "./services/Mover.FitDecoder/Mover.FitDecoder.csproj"
 COPY . .
 WORKDIR "/src/services/Mover.FitDecoder"
