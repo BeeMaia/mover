@@ -15,7 +15,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
     accessPolicies: [
       {
         tenantId: subscription().tenantId
-        managedIdentityObjectId: managedIdentityObjectId
+        objectId: managedIdentityObjectId
         permissions: {
           secrets: [
             'get'
