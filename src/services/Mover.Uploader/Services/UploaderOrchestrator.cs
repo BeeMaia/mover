@@ -15,7 +15,7 @@ public class UploaderOrchestrator
         this.blobRepository = blobRepository;
     }
 
-    public async Task UploadAsync(IFormFile file, CancellationToken cancellationToken)
+    public async Task<Guid> UploadAsync(IFormFile file, CancellationToken cancellationToken)
     {
         var rawId = Guid.NewGuid();
         var fileName = $"{rawId}_{file.FileName}";
@@ -28,5 +28,7 @@ public class UploaderOrchestrator
         await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_RAWBLOB, fileName, content, cancellationToken);
 
         await serviceBus.SendAsync(new UploadFile(rawId, fileName), cancellationToken);
+
+        return rawId;
     }
 }

@@ -9,8 +9,8 @@ public class UploaderEndpoints
         if (file == null || file.Length == 0)
             return Results.BadRequest("File is empty");
 
-        await uploaderOrchestrator.UploadAsync(file, cancellationToken);
+        var rawId = await uploaderOrchestrator.UploadAsync(file, cancellationToken);
 
-        return Results.Accepted();
+        return Results.Accepted(value: rawId);
     }
 }

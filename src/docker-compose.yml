@@ -75,3 +75,11 @@ services:
         network_mode: "service:envoy"
         depends_on:
             - envoy
+
+    mongo:
+        container_name: mongodb
+        image: mongo:latest
+
+    mongo-express:
+        container_name: mongo-express
+        image: mongo-express:latest

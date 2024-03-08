@@ -57,8 +57,8 @@ public class FitDecoderService : IFitDecoderService
         {
             if (e.mesg.Num == MesgNum.Session)
             {
-                trk.Type = GetActivityType((SessionMesg)e.mesg);
-                startTime = GetActivityTimestamp((SessionMesg)e.mesg);
+                trk.Type = GetActivityType(e.mesg);
+                startTime = GetActivityTimestamp(e.mesg);
             }
         };
 
@@ -119,13 +119,13 @@ public class FitDecoderService : IFitDecoderService
         };
     }
 
-    private static string GetActivityType(SessionMesg sessionMesg)
+    private static string GetActivityType(Mesg sessionMesg)
     {
         var sport = (SubSport)sessionMesg.FieldValue<byte>(SessionMesg.FieldDefNum.SubSport);
         return sport.ToString();
     }
 
-    private static System.DateTime GetActivityTimestamp(SessionMesg sessionMesg)
+    private static System.DateTime GetActivityTimestamp(Mesg sessionMesg)
     {
         var timestamp = sessionMesg.FieldValue<uint>(SessionMesg.FieldDefNum.StartTime);
         var datetime = new Dynastream.Fit.DateTime(timestamp);

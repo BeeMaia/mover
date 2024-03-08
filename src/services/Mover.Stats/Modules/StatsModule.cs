@@ -30,6 +30,6 @@ public sealed class StatsModule : IModule
     public void RegisterModule(WebApplicationBuilder builder)
     {
         builder.Services.AddSharedServices(builder.Configuration);
-        builder.Services.AddStatsModule();
+        builder.Services.AddStatsModule(builder.Configuration);
     }
 }
