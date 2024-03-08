@@ -94,6 +94,7 @@ module dapr 'dapr.bicep' = {
     managedIdentityName: security.outputs.managedIdentityName
     storageAccountName: storage.outputs.name
     serviceBusName: serviceBus.outputs.serviceBusName 
+    keyVaultName: keyvault.outputs.vaultName
     scopes: [
       uploaderSN
       fitdecoderSN

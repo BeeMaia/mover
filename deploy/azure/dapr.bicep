@@ -1,6 +1,7 @@
 param managedIdentityName string
 param containerAppsEnvironmentName string 
 param storageAccountName string
+param keyVaultName string
 param serviceBusName string
 param scopes string[]
 
@@ -128,6 +129,31 @@ resource pubsubDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2
   ]
 }
 
+resource secretsDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
+  name: 'mover-secrets'
+  parent: containerAppsEnvironment
+  properties: {
+    componentType: 'secretstores.azure.keyvault'
+    version: 'v1'
+    ignoreErrors: false
+    initTimeout: '5s'
+    metadata: [
+      {
+        name: 'vaultName'
+        value: keyVaultName
+      }
+      {
+        name: 'azureClientId'
+        value: managedIdentity.properties.clientId
+      }
+    ]
+    scopes: scopes
+  }
+  dependsOn: [
+    keyVault
+  ]
+}
+
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
   name: managedIdentityName
 }
@@ -142,4 +168,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' existing 
 
 resource serviceBusNamespace 'Microsoft.ServiceBus/namespaces@2021-11-01' existing = {
   name: serviceBusName
+}
+
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
+  name: keyVaultName
 }
