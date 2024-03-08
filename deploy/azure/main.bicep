@@ -160,3 +160,22 @@ module frontend 'frontend.bicep' = {
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
 }
+
+module cosmosdb 'cosmos-db.bicep' = {
+  name:'cosmosdb'
+  params: {
+    cosmosAccountName: '${abbrs.documentDBDatabaseAccounts}${resourceToken}'
+    cosmosDbName: appName
+    location: location
+  }
+}
+
+module keyvault 'keyvault.bicep' = {
+  name:'keyvault'
+  params: {
+    vaultName: '${abbrs.keyVaultVaults}${resourceToken}'
+    location: location
+    managedIdentityObjectId: security.outputs.managedIdentityObjectId
+    moverDbConnString: cosmosdb.outputs.connectionString
+  }
+}

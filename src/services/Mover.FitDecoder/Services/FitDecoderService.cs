@@ -51,14 +51,16 @@ public class FitDecoderService : IFitDecoderService
                 if (trkPoint.Lat != 0 && trkPoint.Lon != 0)
                     points.Add(trkPoint);
             }
-            else if (e.mesg.Num == MesgNum.Session)
+        };
+
+        mesgBroadcaster.MesgEvent += (sender, e) =>
+        {
+            if (e.mesg.Num == MesgNum.Session)
             {
                 trk.Type = GetActivityType((SessionMesg)e.mesg);
                 startTime = GetActivityTimestamp((SessionMesg)e.mesg);
             }
         };
-
-        mesgBroadcaster.MesgEvent += (sender, e) => { };
 
         fitDecoder.MesgEvent += mesgBroadcaster.OnMesg;
 

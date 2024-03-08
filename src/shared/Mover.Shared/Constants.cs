@@ -1,6 +1,16 @@
 ﻿namespace Mover.Shared;
 public static class Constants
 {
+    public static class Options
+    {
+        public const string SecretsStore = "secretsStore";
+    }
+
+    public static class Secrets
+    {
+        public const string MoverDbConnString = "moverDbConnString";
+    }
+
     public static class Dapr
     {
         public const string MOVER_PUBSUB = "mover-pubsub";

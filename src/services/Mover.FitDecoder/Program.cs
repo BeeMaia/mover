@@ -2,6 +2,8 @@ using Mover.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddCustomConfiguration();
+
 // Register Modules
 builder.RegisterModules();
 
