@@ -34,7 +34,8 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
 }
 
 resource moverDbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  name: '${keyVault.name}/moverDbConnString'
+  parent: keyVault
+  name: 'moverDbConnString'
   properties: {
     value: moverDbConnString
   }

@@ -5,7 +5,7 @@ param cosmosDbName string
 resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2021-04-15' = {
   name: cosmosAccountName
   location: location
-  kind: 'GlobalDocumentDB'
+  kind: 'MongoDB'
   properties: {
     databaseAccountOfferType: 'Standard'
     consistencyPolicy: {
@@ -24,7 +24,7 @@ resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2021-04-15' = {
   }
 }
 
-resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-04-15' = {
+resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-04-15' = {
   parent: cosmosAccount
   name: cosmosDbName
   properties: {
@@ -34,18 +34,23 @@ resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-04-15
   }
 }
 
-resource cosmosCollection 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2021-04-15' = {
+resource cosmosCollection 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections@2021-04-15' = {
   parent: cosmosDb
-  name: 'state'
+  name: 'activities'
   properties: {
     resource: {
-      id: 'state'
-      partitionKey: {
-        paths: [
-          '/partitionKey'
-        ]
-        kind: 'Hash'
-      }
+      id: 'activities'
+      indexes:[
+        {
+          key:{
+            keys:[
+              'idRaw'
+              'timestamp'
+              'activityType'
+            ]
+          }
+        }
+      ]
     }
   }
 }
