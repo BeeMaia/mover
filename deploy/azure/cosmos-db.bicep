@@ -16,11 +16,6 @@ resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2021-04-15' = {
         locationName: location
       }
     ]
-    capabilities: [
-      {
-        name: 'EnableServerless'
-      }
-    ]
   }
 }
 
