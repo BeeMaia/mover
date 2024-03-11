@@ -1,12 +1,11 @@
 @import "../../styles/variables.scss";
 @import "../../styles/responsive.scss";
 
-.home-container {
+.activity-container {
     width: 100%;
     height: auto;
 }
-
-.home {
+.activity {
     display: grid;
     gap: 10px;
     grid-template-columns: repeat(4, 1fr);

@@ -6,7 +6,7 @@ using Mover.Uploader.Shared.Commands;
 
 namespace Mover.Uploader;
 
-public class UploaderDispatcher
+public static class UploaderDispatcher
 {
     [Topic(Constants.Dapr.MOVER_PUBSUB, UploadFile.Topic)]
     public static Task<IResult> HandleUploadFileAsync(UploadFile command, ICommandHandler<UploadFile> commandHandler, CancellationToken cancellationToken)

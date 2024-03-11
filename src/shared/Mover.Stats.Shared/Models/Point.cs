@@ -1,19 +1,19 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Mover.Stats.Shared.Models;
 
 public class Point
 {
-    [DataMember(Name = "ts")]
+    [JsonPropertyName("ts")]
     public long Timestamp { get; set; }
-    [DataMember(Name = "temp")]
+    [JsonPropertyName("temp")]
     public decimal Temp { get; set; }
-    [DataMember(Name = "ele")]
+    [JsonPropertyName("ele")]
     public decimal Elevation { get;set; }
-    [DataMember(Name = "s")]
+    [JsonPropertyName("s")]
     public decimal Speed { get; set; }
-    [DataMember(Name = "hr")]
+    [JsonPropertyName("hr")]
     public short HeartRate { get; set; }
-    [DataMember(Name = "c")]
+    [JsonPropertyName("c")]
     public short Cadence { get; set; }
 }

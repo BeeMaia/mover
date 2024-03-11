@@ -1,16 +1,41 @@
+import { useState, useEffect } from "react";
+import { TrailCard } from "../../components/trailcard/TrailCard";
 import "./home.scss";
+import { activity } from "../../models/activity";
 export const Home = () => {
-  return (
-    <div className="home">
-      <div className="box box1">box1</div>
-      <div className="box box2">box1</div>
-      <div className="box box3">box1</div>
-      <div className="box box4">box1</div>
-      <div className="box box5">box1</div>
-      <div className="box box6">box1</div>
-      <div className="box box7">box1</div>
-      <div className="box box8">box1</div>
-      <div className="box box9">box1</div>
-    </div>
-  );
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:10000/s/v1/stats"
+                );
+                const result = await response.json();
+                setData(result);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    return (
+        <div className="home-container">
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <div className="home">
+                    {data.map((item: activity) => (
+                        <div className="box" key={item.idRaw}>
+                            <TrailCard a={item} />
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
 };

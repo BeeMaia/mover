@@ -1,54 +1,82 @@
+@import "../../styles/variables.scss";
 @import "../../styles/responsive.scss";
 
 .navbar {
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .logo {
+    width: 100%;
+    padding: 5px;
     display: flex;
     align-items: center;
-    font-weight: bold;
-    gap: 10px;
-  }
-  .icons {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    .icon {
-      @include sm {
-        display: none;
-      }
-    }
-    .notification {
-      position: relative;
-      span {
+    justify-content: space-between;
+    background-color: $dark-bg;
+    .menu {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: red;
-        color: white;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        font-size: 12px;
-      }
+        justify-content: space-evenly;
+        .logo {
+            font-family: "Orbitron", sans-serif;
+            color: $main-color;
+            background-color: $dark-bg;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            gap: 10px;
+            margin: 0 30px;
+        }
+        .item {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+
+            .listItem {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px;
+
+                &:hover {
+                    background-color: $soft-bg;
+                }
+            }
+        }
     }
 
-    .user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      img {
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
+    .icons {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        .icon {
+            @include sm {
+                display: none;
+            }
+        }
+        .notification {
+            position: relative;
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: red;
+                color: white;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                font-size: 12px;
+            }
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            img {
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
     }
-  }
 }

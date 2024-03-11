@@ -1,38 +1,54 @@
 export const menu = [
-  {
-    id: 1,
-    title: "main",
-    listItems: [
-      {
+    {
         id: 1,
-        title: "Home",
-        url: "/",
-        icon: "home.svg",
-      },
-      {
-        id: 2,
-        title: "Profile",
-        url: "/users/1",
-        icon: "user.svg",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "workout",
-    listItems: [
-      {
-        id: 1,
-        title: "Activities",
-        url: "/activities",
-        icon: "excercising-man.svg",
-      },
-      {
-        id: 2,
-        title: "Calendar",
-        url: "/calendar",
-        icon: "calendar.svg",
-      },
-    ],
-  },
+        listItems: [
+            {
+                id: 1,
+                title: "Attività",
+                url: "/",
+                icon: "excercising-man.svg",
+            },
+        ],
+    },
+];
+
+export const activityTypes = new Map<string, any>();
+activityTypes.set("road", {
+    title: "Giro in bici da corsa",
+    icon: "/road.svg",
+});
+activityTypes.set("ebikemountain", {
+    title: "Giro in e-mtb",
+    icon: "/ebike.svg",
+});
+activityTypes.set("mountain", {
+    title: "Giro in mtb",
+    icon: "/mtb.svg",
+});
+
+export const activities = [
+    {
+        idRaw: "sss",
+        activityType: "road",
+        timestamp: 1710157550,
+        tTime: 3600,
+        tPDrop: 1100,
+        tDistance: 56,
+    },
+    {
+        idRaw: "aaa",
+        activityType: "ebikemountain",
+        timestamp: 1710157550,
+        tTime: 3600,
+        tPDrop: 1100,
+        tDistance: 56,
+    },
+    {
+        idRaw: "bbb",
+        activityType: "mountain",
+        timestamp: 1710157550,
+        tTime: 3600,
+        tPDrop: 1100,
+        tDistance: 56,
+    },
 ];

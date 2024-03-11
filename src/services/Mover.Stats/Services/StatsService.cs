@@ -5,6 +5,7 @@ using Mover.Shared.Models.GPX;
 using Mover.Stats.Interfaces;
 using Mover.Stats.Repositories;
 using Mover.Stats.Shared.Models;
+using Mover.Stats.ViewModels;
 
 namespace Mover.Stats.Services;
 
@@ -21,6 +22,18 @@ public class StatsService : IStatsService
         logger = loggerFactory.CreateLogger(GetType());
     }
 
+    public async Task<IEnumerable<ActivityVM>> GetAsync(CancellationToken cancellationToken)
+    {
+        var activities = await activityRepository.GetAsync(cancellationToken);
+
+        return activities.Select(_ => (ActivityVM)_);
+    }
+
+    public async Task<Activity?> GetByIdRawAsync(string idRaw, CancellationToken cancellationToken)
+    {
+        return await activityRepository.GetAsync(idRaw, cancellationToken);
+    }
+
     public async Task WriteAsync(Guid rawId, string fileName, CancellationToken cancellationToken)
     {
         logger.LogInformation("Start write stats for file: {fileName}", fileName);
@@ -30,7 +43,7 @@ public class StatsService : IStatsService
         var points = gpx?.Trk?.FirstOrDefault()?.Trkseg?.FirstOrDefault()?.Trkpt;
         var track = BuildTrackEntity(rawId, fileName, gpx, points);
 
-        await activityRepository.CreateAsync(track);
+        await activityRepository.CreateAsync(track, cancellationToken);
     }
 
     private static Activity BuildTrackEntity(Guid rawId, string fileName, Gpx? gpx, GpxPoint[]? points)

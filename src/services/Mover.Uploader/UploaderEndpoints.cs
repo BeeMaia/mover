@@ -2,7 +2,7 @@
 
 namespace Mover.Uploader;
 
-public class UploaderEndpoints
+public static class UploaderEndpoints
 {
     public static async Task<IResult> HandleUploadAsync(IFormFile file, UploaderOrchestrator uploaderOrchestrator, CancellationToken cancellationToken)
     {

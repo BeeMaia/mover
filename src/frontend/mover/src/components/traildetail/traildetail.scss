@@ -1,0 +1,37 @@
+@import "../../styles/variables.scss";
+
+.trail-card {
+    display: flex;
+    flex-direction: column;
+    .trail-card-header {
+        .datetime {
+            font-size: 14px;
+        }
+    }
+    .trail-card-body {
+        padding-top: 5px;
+        padding-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        flex: 1;
+        .title {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+        .trail-card-detail {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+
+            .stats {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                align-items: center;
+            }
+        }
+    }
+}

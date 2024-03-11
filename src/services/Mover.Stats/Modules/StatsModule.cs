@@ -10,7 +10,17 @@ public sealed class StatsModule : IModule
 
     public void MapEndpoints(IEndpointRouteBuilder endpoints)
     {
-        // no endpoints
+        var mapGroup = endpoints.MapGroup("v1/stats")
+            .WithTags("Stats");
+
+        mapGroup.MapGet("", StatsEndpoints.HandleGetAsync)
+            .Produces(StatusCodes.Status200OK)
+            .WithName("Get");
+
+        mapGroup.MapGet("/{idRaw}", StatsEndpoints.HandleGetByIdRawAsync)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status200OK)
+            .WithName("GetById");
     }
 
     public void MapDispatchers(IEndpointRouteBuilder endpoints)

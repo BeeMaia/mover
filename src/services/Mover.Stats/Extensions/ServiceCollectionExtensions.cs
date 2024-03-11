@@ -1,4 +1,5 @@
 ﻿using FluentValidation.AspNetCore;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using Mover.Shared;
 using Mover.Shared.Interfaces;
@@ -27,8 +28,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ActivityRepository>().Configure<MongoDbOptions>(configuration.GetSection(nameof(MongoDbOptions)));
 
         services.AddSingleton<IMongoClient>(s =>
-            new MongoClient(configuration.GetValue<string>(Constants.Secrets.MoverDbConnString))
-        );
+        {
+            var pack = new ConventionPack
+            {
+                new IgnoreExtraElementsConvention(true)
+            };
+            ConventionRegistry.Register("IgnoreExtraElements", pack, t => true);
+            return new MongoClient(configuration.GetValue<string>(Constants.Secrets.MoverDbConnString));
+        });
 
         return services;
     }

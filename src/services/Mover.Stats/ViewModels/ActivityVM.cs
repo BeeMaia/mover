@@ -1,13 +1,12 @@
 ﻿using System.Text.Json.Serialization;
+using Mover.Stats.Shared.Models;
 
-namespace Mover.Stats.Shared.Models;
-public class Activity
+namespace Mover.Stats.ViewModels;
+
+public class ActivityVM
 {
     [JsonPropertyName("idRaw")]
     public string IdRaw { get; set; }
-
-    [JsonPropertyName("fn")]
-    public string FileName { get; set; }
 
     [JsonPropertyName("activityType")]
     public string ActivityType { get; set; }
@@ -24,6 +23,16 @@ public class Activity
     [JsonPropertyName("tDistance")]
     public double TotalDistance { get; set; }
 
-    [JsonPropertyName("points")]
-    public IEnumerable<Point> Points { get; set; }
+    public static explicit operator ActivityVM(Activity a)
+    {
+        return new ActivityVM
+        {
+            IdRaw = a.IdRaw,
+            ActivityType = a.ActivityType,
+            Timestamp = a.Timestamp,
+            TotalTime = a.TotalTime,
+            TotalPositiveDrop = a.TotalPositiveDrop,
+            TotalDistance = a.TotalDistance
+        };
+    }
 }

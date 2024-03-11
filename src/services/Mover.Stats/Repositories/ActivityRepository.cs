@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using Mover.Shared.Models;
 using Mover.Stats.Shared.Models;
@@ -18,18 +19,18 @@ public class ActivityRepository
             options.Value.ActivitiesCollectionName);
     }
 
-    public async Task<List<Activity>> GetAsync() =>
-        await activitiesCollection.Find(_ => true).ToListAsync();
+    public async Task<List<Activity>> GetAsync(CancellationToken cancellationToken) =>
+        await activitiesCollection.Find(_ => true).SortByDescending(_=> _.Timestamp).ToListAsync(cancellationToken);
 
-    public async Task<Activity?> GetAsync(string idRaw) =>
-        await activitiesCollection.Find(x => x.IdRaw == idRaw).FirstOrDefaultAsync();
+    public async Task<Activity?> GetAsync(string idRaw, CancellationToken cancellationToken) =>
+        await activitiesCollection.Find(x => x.IdRaw == idRaw).FirstOrDefaultAsync(cancellationToken);
 
-    public async Task CreateAsync(Activity newActivity) =>
-        await activitiesCollection.InsertOneAsync(newActivity);
+    public async Task CreateAsync(Activity newActivity, CancellationToken cancellationToken) =>
+        await activitiesCollection.InsertOneAsync(newActivity, cancellationToken: cancellationToken);
 
-    public async Task UpdateAsync(string idRaw, Activity updatedActivity) =>
-        await activitiesCollection.ReplaceOneAsync(x => x.IdRaw == idRaw, updatedActivity);
+    public async Task UpdateAsync(string idRaw, Activity updatedActivity, CancellationToken cancellationToken) =>
+        await activitiesCollection.ReplaceOneAsync(x => x.IdRaw == idRaw, updatedActivity, cancellationToken: cancellationToken);
 
-    public async Task RemoveAsync(string idRaw) =>
-        await activitiesCollection.DeleteOneAsync(x => x.IdRaw == idRaw);
+    public async Task RemoveAsync(string idRaw, CancellationToken cancellationToken) =>
+        await activitiesCollection.DeleteOneAsync(x => x.IdRaw == idRaw, cancellationToken);
 }
