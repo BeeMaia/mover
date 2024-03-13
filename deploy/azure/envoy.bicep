@@ -27,7 +27,7 @@ module app './reusable/container-app.bicep' = {
     imageName: !empty(imageName) ? imageName : 'nginx:latest'
     daprEnabled: true
     containerName: serviceName
-    targetPort: 80
+    targetPort: 8080
     managedIdentityEnabled: true
     managedIdentityName: managedIdentityName
   }
