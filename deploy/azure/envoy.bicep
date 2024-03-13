@@ -1,55 +1,43 @@
-param location string
+param name string
+param location string = resourceGroup().location
 
-param managedIdentityEnabled bool = false
-param managedIdentityName string = ''
-param containerAppsEnvironmentName string = ''
-
+param containerAppsEnvironmentName string
+param containerRegistryName string
+param imageName string 
 param serviceName string 
+param managedIdentityName string
+param applicationInsightsName string
 
-resource envoyApp 'Microsoft.App/containerApps@2022-03-01' = {
-  name: serviceName
-  location: location
-  identity: managedIdentityEnabled ? {
-    type: 'SystemAssigned,UserAssigned'
-    userAssignedIdentities: {
-      '${managedIdentity.id}' : {}
-    }
-  } : { type: 'None' }
-  dependsOn: [managedIdentity]
-  properties: {
-    managedEnvironmentId: containerAppsEnvironment.id
-    template: {
-      containers: [
-        {
-          name: serviceName
-          image: 'envoyproxy/envoy-alpine:v1.21-latest'
-        }
-      ]
-      scale: {
-        minReplicas: 1
-        maxReplicas: 1
+module app './reusable/container-app.bicep' = {
+  name: '${serviceName}-container-app-module'
+  params: {
+    name: name
+    location: location
+    tags: {}
+    containerAppsEnvironmentName: containerAppsEnvironmentName
+    containerRegistryName: containerRegistryName
+    containerCpuCoreCount: '1.0'
+    containerMemory: '2.0Gi'
+    env:[
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsights.properties.ConnectionString
       }
-    }
-    configuration: {
-      activeRevisionsMode: 'single'
-      dapr: {
-        enabled: true
-        appId: 'envoygw'
-        appPort: 10000
-      }
-      ingress: {
-        external: true
-        targetPort: 10000
-        allowInsecure: true
-      }
-    }
+    ]
+    imageName: !empty(imageName) ? imageName : 'nginx:latest'
+    daprEnabled: true
+    containerName: serviceName
+    targetPort: 80
+    managedIdentityEnabled: true
+    managedIdentityName: managedIdentityName
   }
 }
 
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
-  name: managedIdentityName
+resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = if (applicationInsightsName != '') {
+  name: applicationInsightsName
 }
 
-resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-10-01' existing = {
-  name: containerAppsEnvironmentName
-}
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = app.outputs.identityPrincipalId
+output SERVICE_API_NAME string = app.outputs.name
+output SERVICE_API_URI string = app.outputs.uri
+output SERVICE_API_IMAGE_NAME string = app.outputs.imageName

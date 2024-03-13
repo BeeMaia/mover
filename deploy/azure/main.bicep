@@ -162,6 +162,20 @@ module frontend 'frontend.bicep' = {
   }
 }
 
+module envoy 'envoy.bicep' = {
+  name: 'envoy'
+  params: {
+    name: '${abbrs.appContainerApps}envoy-${resourceToken}'
+    location: location
+    imageName: 'envoy:main'
+    containerAppsEnvironmentName: appEnv.outputs.environmentName
+    containerRegistryName: registryName
+    serviceName: 'envoy'
+    managedIdentityName: security.outputs.managedIdentityName
+    applicationInsightsName: monitoring.outputs.applicationInsightsName
+  }
+}
+
 module cosmosdb 'cosmos-db.bicep' = {
   name:'cosmosdb'
   params: {
