@@ -1,0 +1,17 @@
+name: 2. Build and Publish Envoy Gateway to Registry
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - src/apigateways/envoy/**
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+jobs:
+  ci-cd:
+    uses: ./.github/workflows/build-publish.yml
+    with:
+      context: ./src
+      dockerfile: src/apigateways/envoy/Dockerfile
+      image-name: envoy
+    secrets: inherit
