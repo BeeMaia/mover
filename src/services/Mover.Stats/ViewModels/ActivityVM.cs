@@ -36,3 +36,27 @@ public class ActivityVM
         };
     }
 }
+
+public class ActivityWithCoordinatesVM : ActivityVM
+{
+    [JsonPropertyName("positions")]
+    public IEnumerable<PositionVM> Positions { get; set; }
+
+    [JsonPropertyName("points")]
+    public IEnumerable<PointVM> Points { get; set; }
+
+    public static explicit operator ActivityWithCoordinatesVM(Activity a)
+    {
+        return new ActivityWithCoordinatesVM
+        {
+            IdRaw = a.IdRaw,
+            ActivityType = a.ActivityType,
+            Timestamp = a.Timestamp,
+            TotalTime = a.TotalTime,
+            TotalPositiveDrop = a.TotalPositiveDrop,
+            TotalDistance = a.TotalDistance,
+            Positions = a.Points.Select(_ => new PositionVM { Latitude = _.Latitude, Longitude = _.Longitude }),
+            Points = a.Points.Select(_ => (PointVM)_)
+        };
+    }
+}

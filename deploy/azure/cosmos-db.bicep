@@ -39,9 +39,7 @@ resource cosmosCollection 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabase
         {
           key:{
             keys:[
-              'idRaw'
               'timestamp'
-              'activityType'
             ]
           }
         }

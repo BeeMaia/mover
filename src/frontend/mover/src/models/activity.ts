@@ -10,6 +10,7 @@ export type activity = {
 export type activityFull = activity & {
     fn: string;
     points: point[];
+    positions: position[];
 };
 
 export type point = {
@@ -19,4 +20,9 @@ export type point = {
     s: number;
     hr: number;
     c: number;
+};
+
+export type position = {
+    lat: number;
+    lng: number;
 };

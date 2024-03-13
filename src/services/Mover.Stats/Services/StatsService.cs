@@ -29,9 +29,13 @@ public class StatsService : IStatsService
         return activities.Select(_ => (ActivityVM)_);
     }
 
-    public async Task<Activity?> GetByIdRawAsync(string idRaw, CancellationToken cancellationToken)
+    public async Task<ActivityWithCoordinatesVM?> GetByIdRawAsync(string idRaw, CancellationToken cancellationToken)
     {
-        return await activityRepository.GetAsync(idRaw, cancellationToken);
+        var activity =  await activityRepository.GetAsync(idRaw, cancellationToken);
+        if (activity is null)
+            return null;
+
+        return (ActivityWithCoordinatesVM)activity;
     }
 
     public async Task WriteAsync(Guid rawId, string fileName, CancellationToken cancellationToken)
@@ -106,7 +110,9 @@ public class StatsService : IStatsService
     {
         var point = new Point
         {
-            Timestamp = p.Time.ToEpoch()
+            Timestamp = p.Time.ToEpoch(),
+            Latitude = p.Lat,
+            Longitude = p.Lon
         };
 
         if (p.Extensions is not null)
