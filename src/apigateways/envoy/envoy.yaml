@@ -38,19 +38,19 @@ static_resources:
                                           match:
                                               prefix: "/d/"
                                           route:
-                                              prefix_rewrite: "/v1.0/invoke/mover-fitdecoder/method/"
+                                              prefix_rewrite: "/v1.0/invoke/fitdecoder/method/"
                                               cluster: dapr
                                         - name: "uploader"
                                           match:
                                               prefix: "/u/"
                                           route:
-                                              prefix_rewrite: "/v1.0/invoke/mover-uploader/method/"
+                                              prefix_rewrite: "/v1.0/invoke/uploader/method/"
                                               cluster: dapr
                                         - name: "stats"
                                           match:
                                               prefix: "/s/"
                                           route:
-                                              prefix_rewrite: "/v1.0/invoke/mover-stats/method/"
+                                              prefix_rewrite: "/v1.0/invoke/stats/method/"
                                               cluster: dapr
     clusters:
         - name: dapr

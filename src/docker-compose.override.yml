@@ -21,7 +21,7 @@ services:
             [
                 "./daprd",
                 "-app-id",
-                "mover-fitdecoder",
+                "fitdecoder",
                 "-app-port",
                 "80",
                 "-log-level",
@@ -52,7 +52,7 @@ services:
             [
                 "./daprd",
                 "-app-id",
-                "mover-stats",
+                "stats",
                 "-app-port",
                 "80",
                 "-log-level",
@@ -83,7 +83,7 @@ services:
             [
                 "./daprd",
                 "-app-id",
-                "mover-uploader",
+                "uploader",
                 "-app-port",
                 "80",
                 "-log-level",
