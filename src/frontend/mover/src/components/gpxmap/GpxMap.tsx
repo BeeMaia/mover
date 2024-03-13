@@ -8,6 +8,8 @@ interface GpxMapProps {
 
 const GpxMap: React.FC<GpxMapProps> = ({ positions }) => {
     const style = { height: "400px" };
+    const attribution =
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 
     return (
         <MapContainer
@@ -21,9 +23,10 @@ const GpxMap: React.FC<GpxMapProps> = ({ positions }) => {
                 positions={positions}
             />
             <TileLayer
-                url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 minZoom={0}
                 maxZoom={20}
+                attribution={attribution}
             />
         </MapContainer>
     );
