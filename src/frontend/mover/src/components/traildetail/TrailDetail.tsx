@@ -3,6 +3,8 @@ import { activityTypes } from "../../data";
 import { activityFull } from "../../models/activity";
 import { statData } from "../../models/statData";
 import StatsChart from "../chart/Chart";
+import GpxMap from "../gpxmap/GpxMap";
+import { LatLngExpression } from "leaflet";
 
 interface TrailDetailProps {
     a: activityFull | undefined;
@@ -48,6 +50,21 @@ export const TrailDetail: React.FC<TrailDetailProps> = ({ a }) => {
         value: x.temp,
     }));
 
+    const positions: LatLngExpression[] = [
+        [40.689818841705, -74.04511194542516],
+        [40.75853187779803, -73.98495720388513],
+        [40.86151538060051, -74.06201170384256],
+        [40.80981015620906, -74.03656769139772],
+        [40.80721155324825, -74.04274750092904],
+        [40.78901848327006, -74.081199649124],
+        [40.764319913561216, -74.08840942691056],
+        [40.749756455072884, -74.09493255919364],
+        [40.74793579843903, -74.07673645335137],
+        [40.675849802727335, -74.19758606169779],
+        [40.60394644123212, -74.05991363796608],
+        [40.6495463256113, -73.96000671720954],
+    ];
+
     return (
         <article className="trail-card">
             <div className="trail-card-header">
@@ -79,6 +96,7 @@ export const TrailDetail: React.FC<TrailDetailProps> = ({ a }) => {
                     </div>
                 </div>
             </div>
+            <GpxMap positions={positions} />
             <StatsChart items={eleData} color="#50b012" title="Quota" />
             <StatsChart items={sData} color="#11a9ed" title="Velocità" />
             <StatsChart

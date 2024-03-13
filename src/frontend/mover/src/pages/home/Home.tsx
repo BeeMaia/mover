@@ -10,7 +10,7 @@ export const Home = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:10000/s/v1/stats"
+                    `${import.meta.env.VITE_APP_GATEWAY_URL}/s/v1/stats`
                 );
                 const result = await response.json();
                 setData(result);

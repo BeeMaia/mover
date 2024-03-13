@@ -14,4 +14,5 @@ jobs:
       context: ./src/frontend/mover
       dockerfile: src/frontend/mover/Dockerfile
       image-name: mover-fe
+      build-args: VITE_APP_GATEWAY_URL=https://ca-envoy-moverdev.wittycoast-d3defd72.swedencentral.azurecontainerapps.io
     secrets: inherit

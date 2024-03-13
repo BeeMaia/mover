@@ -13,7 +13,7 @@ export const Activity = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:10000/s/v1/stats/${id}`
+                    `${import.meta.env.VITE_APP_GATEWAY_URL}/s/v1/stats/${id}`
                 );
                 const result: activityFull = await response.json();
                 setData(result);

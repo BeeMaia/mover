@@ -1,5 +1,7 @@
 # Step 1: Build Angular
 FROM node:latest as build
+ARG VITE_APP_GATEWAY_URL
+ENV VITE_APP_GATEWAY_URL=$VITE_APP_GATEWAY_URL
 
 RUN mkdir /app
 WORKDIR /app
@@ -9,7 +11,6 @@ COPY ./ /app
 
 # Install all the dependencies && Generate the build of the application
 RUN npm install && npm run build
-
 
 # Stage 2: Serve app with nginx server
 # Use official nginx image as the base image
