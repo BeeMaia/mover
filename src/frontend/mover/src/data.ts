@@ -29,6 +29,14 @@ activityTypes.set("mountain", {
     title: "Giro in mtb",
     icon: "/mtb.svg",
 });
+activityTypes.set("virtualride", {
+    title: "Pedalata virtuale",
+    icon: "/road.svg",
+});
+activityTypes.set("indoorcycling", {
+    title: "Pedalata virtuale",
+    icon: "/road.svg",
+});
 
 export const activities = [
     {

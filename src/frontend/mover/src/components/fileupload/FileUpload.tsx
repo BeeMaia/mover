@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import "./fileupload.scss";
-import React, { ChangeEvent, useState, useRef } from "react";
+import React, { ChangeEvent, useRef } from "react";
 
 const FileUpload: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
