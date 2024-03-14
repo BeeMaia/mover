@@ -8,7 +8,7 @@ Dapr is a CNCF project that helps developers overcome the inherent challenges pr
 
 ## High-Level Overview of the application
 
-![image of architecture](./assets/arch_v2.png)
+![image of architecture](./assets/mover-arch.png)
 
 ## Deploy via GitHub Actions
 

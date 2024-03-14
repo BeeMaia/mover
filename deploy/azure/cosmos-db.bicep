@@ -39,7 +39,7 @@ resource cosmosCollection 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabase
         {
           key:{
             keys:[
-              'timestamp'
+              'Timestamp'
             ]
           }
         }

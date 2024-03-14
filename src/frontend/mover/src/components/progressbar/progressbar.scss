@@ -1,0 +1,33 @@
+@import "../../styles/variables.scss";
+
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $main-color;
+    height: 4px;
+    z-index: 9999;
+    animation: progress-bar-animation 2s infinite;
+}
+
+@keyframes progress-bar-animation {
+    0% {
+        transform: scaleX(0);
+    }
+    20% {
+        transform: scaleX(0.2);
+    }
+    40% {
+        transform: scaleX(0.4);
+    }
+    60% {
+        transform: scaleX(0.6);
+    }
+    80% {
+        transform: scaleX(0.8);
+    }
+    100% {
+        transform: scaleX(1);
+    }
+}

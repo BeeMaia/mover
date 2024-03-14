@@ -10,7 +10,7 @@
     display: grid;
     gap: 10px;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(150px, auto);
+    grid-auto-rows: minmax(80px, auto);
 
     @include xl {
         grid-template-columns: repeat(3, 1fr);
@@ -25,10 +25,27 @@
     }
 
     @include sm {
-        grid-auto-rows: minmax(120px, auto);
+        grid-auto-rows: minmax(60px, auto);
     }
 
     .box {
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid $soft-bg;
+        grid-column: span 2;
+        grid-row: span 1;
+        grid-column-start: 2;
+        grid-column-end: 4;
+        background-color: $main-bg;
+        min-height: 150px;
+
+        @include xl {
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+    }
+
+    .box-upload {
         padding: 20px;
         border-radius: 10px;
         border: 1px solid $soft-bg;

@@ -17,6 +17,10 @@ activityTypes.set("road", {
     title: "Giro in bici da corsa",
     icon: "/road.svg",
 });
+activityTypes.set("road_biking", {
+    title: "Giro in bici da corsa",
+    icon: "/road.svg",
+});
 activityTypes.set("ebikemountain", {
     title: "Giro in e-mtb",
     icon: "/ebike.svg",

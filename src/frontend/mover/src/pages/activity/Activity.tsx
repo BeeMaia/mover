@@ -3,6 +3,7 @@ import "./activity.scss";
 import { useParams } from "react-router-dom";
 import { TrailDetail } from "../../components/traildetail/TrailDetail";
 import { activityFull } from "../../models/activity";
+import ProgressBar from "../../components/progressbar/ProgressBar";
 
 export const Activity = () => {
     const { id } = useParams();
@@ -29,7 +30,7 @@ export const Activity = () => {
     return (
         <div className="activity-container">
             {loading ? (
-                <p>Loading...</p>
+                <ProgressBar />
             ) : (
                 <div className="activity">
                     <div className="box">

@@ -21,7 +21,7 @@ public class ActivityRepository
     public async Task<List<Activity>> GetAsync(CancellationToken cancellationToken) =>
         await activitiesCollection
             .Find(Builders<Activity>.Filter.Empty)
-            .Sort(Builders<Activity>.Sort.Ascending(_=>_.Timestamp))
+            .Sort(Builders<Activity>.Sort.Descending(_=>_.Timestamp))
             .ToListAsync(cancellationToken);
 
     public async Task<Activity?> GetAsync(string idRaw, CancellationToken cancellationToken) =>

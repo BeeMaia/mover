@@ -1,0 +1,28 @@
+@import "../../styles/variables.scss";
+
+.file-uploader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+        flex: 1;
+    }
+
+    input {
+        width: 350px;
+        margin-bottom: 0;
+        display: none;
+    }
+    .custom-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px;
+        border: 1px solid $dark-color;
+        border-radius: 50%;
+        background-color: transparent; /* Example background color */
+        color: #fff; /* Example text color */
+        cursor: pointer;
+    }
+}

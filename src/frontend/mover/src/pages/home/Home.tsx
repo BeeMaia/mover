@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { TrailCard } from "../../components/trailcard/TrailCard";
 import "./home.scss";
 import { activity } from "../../models/activity";
+import FileUpload from "../../components/fileupload/FileUpload";
+import ProgressBar from "../../components/progressbar/ProgressBar";
 export const Home = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -26,9 +28,12 @@ export const Home = () => {
     return (
         <div className="home-container">
             {loading ? (
-                <p>Loading...</p>
+                <ProgressBar />
             ) : (
                 <div className="home">
+                    <div className="box-upload">
+                        <FileUpload />
+                    </div>
                     {data.map((item: activity) => (
                         <div className="box" key={item.idRaw}>
                             <TrailCard a={item} />
