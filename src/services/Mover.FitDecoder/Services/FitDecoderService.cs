@@ -122,6 +122,11 @@ public class FitDecoderService : IFitDecoderService
     private static string GetActivityType(Mesg sessionMesg)
     {
         var sport = (SubSport)sessionMesg.FieldValue<byte>(SessionMesg.FieldDefNum.SubSport);
+        if (sport == (SubSport)58)
+        {
+            return "VirtualRide";
+        }
+
         return sport.ToString();
     }
 

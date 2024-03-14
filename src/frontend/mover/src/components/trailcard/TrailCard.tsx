@@ -22,7 +22,10 @@ export const TrailCard: React.FC<TrailCardProps> = ({ a }) => {
     const formattedTime = dateObject.toISOString().substr(11, 5); // Estrae solo HH:mm
 
     // Da rivedere mappatura, valido esclusivamente per meetup
-    const activityType = activityTypes.get(a.activityType.toLowerCase());
+    const activityType = activityTypes.get(a.activityType.toLowerCase()) ?? {
+        title: "Attività generica",
+        icon: "/generic.svg",
+    };
 
     return (
         <article className="trail-card">
