@@ -8,7 +8,13 @@ Dapr is a CNCF project that helps developers overcome the inherent challenges pr
 
 ## High-Level Overview of the application
 
-![image of architecture](./assets/mover-arch.png)
+### Localhost environment
+
+![image of architecture on localhost](./assets/localhost_arch.png)
+
+### Azure environment
+
+![image of architecture on Azure](./assets/azure_arch.png)
 
 ## Deploy via GitHub Actions
 

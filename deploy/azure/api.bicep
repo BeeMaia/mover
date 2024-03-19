@@ -16,8 +16,8 @@ module app './reusable/container-app.bicep' = {
     tags: {}
     containerAppsEnvironmentName: containerAppsEnvironmentName
     containerRegistryName: containerRegistryName
-    containerCpuCoreCount: '1.0'
-    containerMemory: '2.0Gi'
+    containerCpuCoreCount: '0.5'
+    containerMemory: '1.0Gi'
     env:[
       {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
