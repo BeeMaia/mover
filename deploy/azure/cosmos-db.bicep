@@ -2,11 +2,14 @@ param location string
 param cosmosAccountName string
 param cosmosDbName string
 
-resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2021-04-15' = {
+resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2023-11-15' = {
   name: cosmosAccountName
   location: location
   kind: 'MongoDB'
   properties: {
+    apiProperties:{
+      serverVersion: '4.2'
+    }
     databaseAccountOfferType: 'Standard'
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session'
@@ -24,7 +27,7 @@ resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2021-04-15' = {
   }
 }
 
-resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-04-15' = {
+resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2023-11-15' = {
   parent: cosmosAccount
   name: cosmosDbName
   properties: {
@@ -34,7 +37,7 @@ resource cosmosDb 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-0
   }
 }
 
-resource cosmosCollection 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections@2021-04-15' = {
+resource cosmosCollection 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections@2023-11-15' = {
   parent: cosmosDb
   name: 'activities'
   properties: {
