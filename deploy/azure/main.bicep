@@ -162,7 +162,10 @@ module auth 'api.bicep' = {
     managedIdentityName: security.outputs.managedIdentityName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
-  dependsOn:[dapr]
+  dependsOn:[
+    dapr 
+    sqlServer
+  ]
 }
 
 module frontend 'frontend.bicep' = {
@@ -202,6 +205,13 @@ module cosmosdb 'cosmos-db.bicep' = {
   }
 }
 
+module sqlServer 'sql-server.bicep' = {
+  name: 'sqlServer'
+  params: {
+    location: location
+    sqlServerName: '${abbrs.sqlServers}${resourceToken}'
+  }
+}
 
 module keyvault 'keyvault.bicep' = {
   name:'keyvault'
@@ -210,5 +220,6 @@ module keyvault 'keyvault.bicep' = {
     location: location
     managedIdentityObjectId: security.outputs.managedIdentityObjectId
     moverDbConnString: cosmosdb.outputs.connectionString
+    moverSqlConnString: sqlServer.outputs.identityDbConnectionString
   }
 }

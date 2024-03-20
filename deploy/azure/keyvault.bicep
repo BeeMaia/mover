@@ -2,6 +2,7 @@ param location string
 param vaultName string 
 param managedIdentityObjectId string
 param moverDbConnString string
+param moverSqlConnString string
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: vaultName
@@ -38,6 +39,14 @@ resource moverDbConnectionStringSecret 'Microsoft.KeyVault/vaults/secrets@2022-0
   name: 'moverDbConnString'
   properties: {
     value: moverDbConnString
+  }
+}
+
+resource moverSqlConnStringSecret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  parent: keyVault
+  name: 'moverSqlConnString'
+  properties: {
+    value: moverSqlConnString
   }
 }
 

@@ -3,13 +3,11 @@ param sqlServerName string
 param sqlAdministratorLogin string = 'server_admin'
 param sqlAdministratorLoginPassword string = 'Pass@word'
 param identityDbName string = 'AuthDb'
-param managedIdentityName string
 
 resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: sqlServerName
   location: location
   properties: {
-    primaryUserAssignedIdentityId: managedIdentity.id
     administratorLogin: sqlAdministratorLogin
     administratorLoginPassword: sqlAdministratorLoginPassword
   }
@@ -31,15 +29,9 @@ resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
     }
     sku: {
       name: 'Basic'
-      size: 'Basic'
       tier: 'Basic'
     }
   }
 }
-
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
-  name: managedIdentityName
-}
-
 
 output identityDbConnectionString string = 'Server=tcp:${sqlServerName}${environment().suffixes.sqlServerHostname},1433;Initial Catalog=${identityDbName};Persist Security Info=False;User ID=${sqlAdministratorLogin};Password=${sqlAdministratorLoginPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
