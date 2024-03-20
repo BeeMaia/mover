@@ -100,6 +100,7 @@ module dapr 'dapr.bicep' = {
       uploaderSN
       fitdecoderSN
       statsSN
+      authSN
     ]
   }
 }
