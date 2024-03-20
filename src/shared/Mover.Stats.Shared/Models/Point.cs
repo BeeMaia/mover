@@ -13,7 +13,7 @@ public class Point
     [JsonPropertyName("temp")]
     public decimal Temp { get; set; }
     [JsonPropertyName("ele")]
-    public decimal Elevation { get;set; }
+    public decimal Elevation { get; set; }
     [JsonPropertyName("s")]
     public decimal Speed { get; set; }
     [JsonPropertyName("hr")]

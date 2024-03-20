@@ -6,6 +6,9 @@ public class Activity
     [JsonPropertyName("idRaw")]
     public string IdRaw { get; set; }
 
+    [JsonPropertyName("userId")]
+    public string UserId { get; set; }
+
     [JsonPropertyName("fn")]
     public string FileName { get; set; }
 

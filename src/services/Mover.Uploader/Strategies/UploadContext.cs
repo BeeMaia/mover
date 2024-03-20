@@ -12,13 +12,13 @@ public class UploadContext
         this.strategies = strategies;
     }
 
-    public async Task<Event?> UploadAsync(Guid rawId, string fileName, byte[] content, CancellationToken cancellationToken)
+    public async Task<Event?> UploadAsync(Guid rawId, string fileName, string userId, byte[] content, CancellationToken cancellationToken)
     {
         var instance = strategies.FirstOrDefault(x => x.Extension.Equals(Path.GetExtension(fileName), StringComparison.InvariantCultureIgnoreCase));
 
         if (instance is not null)
         {
-            return await instance.UploadAsync(rawId, fileName, content, cancellationToken);
+            return await instance.UploadAsync(rawId, fileName, userId, content, cancellationToken);
         }
 
         return null;

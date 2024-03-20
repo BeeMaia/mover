@@ -1,11 +1,14 @@
-﻿using Mover.Stats.Interfaces;
+﻿using System.Security.Claims;
+using Mover.Stats.Interfaces;
 namespace Mover.Stats;
 
 public static class StatsEndpoints
 {
-    public static async Task<IResult> HandleGetAsync(IStatsService service, CancellationToken cancellationToken)
+    public static async Task<IResult> HandleGetAsync(HttpContext httpContext, IStatsService service, CancellationToken cancellationToken)
     {
-        var collection = await service.GetAsync(cancellationToken);
+        var claim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+        var collection = await service.GetAsync(claim?.Value, cancellationToken);
 
         return Results.Ok(collection);
     }

@@ -2,7 +2,11 @@ import { Link } from "react-router-dom";
 import { menu } from "../../data";
 import "./navbar.scss";
 
-export const NavBar = () => {
+interface NavBarProps {
+    username: string;
+}
+
+export const NavBar: React.FC<NavBarProps> = ({ username }) => {
     return (
         <div className="navbar">
             <div className="menu">
@@ -32,11 +36,8 @@ export const NavBar = () => {
                     <span>1</span>
                 </div>
                 <div className="user">
-                    <img
-                        src="https://yt3.ggpht.com/WMbrNFgi-hg7Asxl0n2yJXgnmDIXkUo_f3ZzR_INlJnttieS1xvwGjOk0k4LikCOHEid0eAe9w=s88-c-k-c0x00ffffff-no-rj"
-                        alt=""
-                    />
-                    <span>Andrea</span>
+                    <img src={`/${username}.jpg`} alt="" />
+                    <span>{username}</span>
                 </div>
                 <img src="/settings.svg" alt="" className="icon" />
             </div>

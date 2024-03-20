@@ -8,10 +8,12 @@ public record DecodeFit : Command
     public Guid RawId { get; }
 
     public string FileName { get; }
+    public string UserId { get; }
 
-    public DecodeFit(Guid rawId, string fileName)
+    public DecodeFit(Guid rawId, string fileName, string userId)
     {
         RawId = rawId;
         FileName = fileName;
+        UserId = userId;
     }
 }

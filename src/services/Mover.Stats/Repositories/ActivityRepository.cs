@@ -18,13 +18,13 @@ public class ActivityRepository
             options.Value.ActivitiesCollectionName);
     }
 
-    public async Task<List<Activity>> GetAsync(CancellationToken cancellationToken) =>
+    public async Task<List<Activity>> GetAsync(string userId, CancellationToken cancellationToken) =>
         await activitiesCollection
-            .Find(Builders<Activity>.Filter.Empty)
-            .Sort(Builders<Activity>.Sort.Descending(_=>_.Timestamp))
+            .Find(FilterByUserId(userId))
+            .Sort(Builders<Activity>.Sort.Descending(_ => _.Timestamp))
             .ToListAsync(cancellationToken);
 
-    public async Task<Activity?> GetAsync(string idRaw, CancellationToken cancellationToken) =>
+    public async Task<Activity?> GetByIdRawAsync(string idRaw, CancellationToken cancellationToken) =>
         await activitiesCollection.Find(FilterByIdRaw(idRaw)).FirstOrDefaultAsync(cancellationToken);
 
     public async Task CreateAsync(Activity newActivity, CancellationToken cancellationToken) =>
@@ -38,4 +38,7 @@ public class ActivityRepository
 
     private static FilterDefinition<Activity> FilterByIdRaw(string idRaw) =>
         Builders<Activity>.Filter.Eq(_ => _.IdRaw, idRaw);
+
+    private static FilterDefinition<Activity> FilterByUserId(string userId) =>
+       Builders<Activity>.Filter.Eq(_ => _.UserId, userId);
 }

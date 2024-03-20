@@ -25,6 +25,6 @@ public sealed class DecodeFitHandler : Mover.Shared.Handlers.CommandHandler<Deco
 
         await blobRepository.CreateBlobAsync(Constants.Dapr.MOVER_GPXBLOB, gpxFileName, gpx.ToArray(), cancellationToken);
 
-        await ServiceBus.PublishAsync(new UploadedGpx(gpxFileName, command.RawId), cancellationToken);
+        await ServiceBus.PublishAsync(new UploadedGpx(gpxFileName, command.RawId, command.UserId), cancellationToken);
     }
 }

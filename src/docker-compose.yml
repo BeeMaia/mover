@@ -63,6 +63,23 @@ services:
             - mover-stats
             - rabbitmq
 
+    mover-auth:
+        container_name: mover-auth
+        image: ${DOCKER_REGISTRY-}mover_auth:${PLATFORM:-linux}-${TAG:-latest}
+        build:
+            context: ./
+            dockerfile: services/Mover.Auth/Dockerfile
+        depends_on:
+            - sqldata
+
+    mover-auth-dapr:
+        container_name: mover-auth-dapr
+        image: "daprio/daprd:1.10.6"
+        network_mode: "service:mover-auth"
+        depends_on:
+            - mover-auth
+            - sqldata
+
     rabbitmq:
         container_name: rabbit
         image: rabbitmq:3-management-alpine
@@ -87,3 +104,6 @@ services:
     mongo-express:
         container_name: mongo-express
         image: mongo-express:latest
+
+    sqldata:
+        image: mcr.microsoft.com/azure-sql-edge

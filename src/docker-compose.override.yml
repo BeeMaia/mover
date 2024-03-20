@@ -98,6 +98,37 @@ services:
             - "../dapr/config/:/config"
             - "./services/temp/:/app/temp"
 
+    mover-auth:
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=http://0.0.0.0:80
+            - PATH_BASE=/mover-auth
+            - PORT=80
+        ports:
+            - "5106:80"
+        volumes:
+            - "./services/temp/:/app/temp"
+
+    mover-auth-dapr:
+        command:
+            [
+                "./daprd",
+                "-app-id",
+                "auth",
+                "-app-port",
+                "80",
+                "-log-level",
+                "debug",
+                "-components-path",
+                "/components",
+                "-dapr-http-max-request-size",
+                "8",
+            ]
+        volumes:
+            - "../dapr/components/local/:/components"
+            - "../dapr/config/:/config"
+            - "./services/temp/:/app/temp"
+
     envoy:
         volumes:
             - ./apigateways/envoy:/etc/envoy
@@ -149,5 +180,17 @@ services:
             ME_CONFIG_MONGODB_ADMINPASSWORD: example
             ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
+    sqldata:
+        environment:
+          - SA_PASSWORD=Pass@word
+          - ACCEPT_EULA=Y
+        ports:
+          - "5433:1433"
+        volumes:
+          - mover-sqldata:/var/opt/mssql
+
 volumes:
     mongo-volume:
+        external: false
+    mover-sqldata:
+        external: false

@@ -8,10 +8,12 @@ public record UploadedGpx : Event
 
     public string FileName { get; }
     public Guid RawId { get; }
+    public string UserId { get; set; }
 
-    public UploadedGpx(string fileName, Guid rawId)
+    public UploadedGpx(string fileName, Guid rawId, string userId)
     {
         FileName = fileName;
         RawId = rawId;
+        UserId = userId;
     }
 }

@@ -18,6 +18,10 @@ const FileUpload: React.FC = () => {
             const formData = new FormData();
             formData.append("file", selectedFile);
             try {
+                var user = JSON.parse(localStorage.getItem("user")!);
+                const headers = {
+                    Authorization: `Bearer ${user.token.result}`,
+                };
                 const response = await fetch(
                     `${
                         import.meta.env.VITE_APP_GATEWAY_URL
@@ -25,6 +29,7 @@ const FileUpload: React.FC = () => {
                     {
                         method: "POST",
                         body: formData,
+                        headers,
                     }
                 );
                 if (response.ok) {

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Mover.Shared.Interfaces;
+using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Mover.Uploader.Modules;
@@ -33,6 +34,16 @@ public sealed class SwaggerModule : IModule
             Title = "Mover Uploader Api",
             Version = "v1"
         });
+
+        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+        {
+            Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+            In = ParameterLocation.Header,
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+        });
+
+        options.OperationFilter<SecurityRequirementsOperationFilter>();
 
         ConfigureXmlComments(options);
     }

@@ -15,12 +15,12 @@ public sealed class StatsModule : IModule
 
         mapGroup.MapGet("", StatsEndpoints.HandleGetAsync)
             .Produces(StatusCodes.Status200OK)
-            .WithName("Get");
+            .WithName("Get").RequireAuthorization();
 
         mapGroup.MapGet("/{idRaw}", StatsEndpoints.HandleGetByIdRawAsync)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status200OK)
-            .WithName("GetById");
+            .WithName("GetById").RequireAuthorization();
     }
 
     public void MapDispatchers(IEndpointRouteBuilder endpoints)

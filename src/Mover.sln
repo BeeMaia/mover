@@ -19,9 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{26
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mover.Stats", "services\Mover.Stats\Mover.Stats.csproj", "{F97F16F6-28DE-4491-8EB4-295EC3674C76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mover.FitDecoder", "services\Mover.FitDecoder\Mover.FitDecoder.csproj", "{5A1CE427-37D3-45A5-9539-31328B29548F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mover.FitDecoder", "services\Mover.FitDecoder\Mover.FitDecoder.csproj", "{5A1CE427-37D3-45A5-9539-31328B29548F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mover.Uploader", "services\Mover.Uploader\Mover.Uploader.csproj", "{181D8F64-E011-4B5F-945B-70F77234A6FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mover.Uploader", "services\Mover.Uploader\Mover.Uploader.csproj", "{181D8F64-E011-4B5F-945B-70F77234A6FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mover.Auth", "services\Mover.Auth\Mover.Auth.csproj", "{A840EAB8-F66B-4BB8-8533-E18ED51E278F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{181D8F64-E011-4B5F-945B-70F77234A6FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{181D8F64-E011-4B5F-945B-70F77234A6FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{181D8F64-E011-4B5F-945B-70F77234A6FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A840EAB8-F66B-4BB8-8533-E18ED51E278F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A840EAB8-F66B-4BB8-8533-E18ED51E278F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A840EAB8-F66B-4BB8-8533-E18ED51E278F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A840EAB8-F66B-4BB8-8533-E18ED51E278F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{F97F16F6-28DE-4491-8EB4-295EC3674C76} = {26266B44-8AB8-4CF5-A58C-D99B5C8AE23A}
 		{5A1CE427-37D3-45A5-9539-31328B29548F} = {26266B44-8AB8-4CF5-A58C-D99B5C8AE23A}
 		{181D8F64-E011-4B5F-945B-70F77234A6FA} = {26266B44-8AB8-4CF5-A58C-D99B5C8AE23A}
+		{A840EAB8-F66B-4BB8-8533-E18ED51E278F} = {26266B44-8AB8-4CF5-A58C-D99B5C8AE23A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CAD614E-1BB0-4739-B611-85F4B04B884E}

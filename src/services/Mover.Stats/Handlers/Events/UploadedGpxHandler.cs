@@ -17,6 +17,6 @@ public sealed class UploadedGpxHandler : Mover.Shared.Handlers.EventHandler<Uplo
     {
         Logger.LogInformation("Handle Event {@Event}", @event);
 
-        await serviceBus.SendAsync(new WriteStats(@event.RawId, @event.FileName), cancellationToken);
+        await serviceBus.SendAsync(new WriteStats(@event.RawId, @event.FileName, @event.UserId), cancellationToken);
     }
 }

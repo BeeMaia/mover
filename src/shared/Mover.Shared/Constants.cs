@@ -4,11 +4,15 @@ public static class Constants
     public static class Options
     {
         public const string SecretsStore = "secretsStore";
+        public const string Jwt_Issuer = "Jwt:Issuer";
+        public const string Jwt_Audience = "Jwt:Audience";
     }
 
     public static class Secrets
     {
         public const string MoverDbConnString = "moverDbConnString";
+        public const string MoverSqlConnString = "moverSqlConnString";
+        public const string MoverJwtKey = "jwtKey";
     }
 
     public static class Dapr

@@ -12,8 +12,8 @@ var app = builder.Build();
 app.UseCors("CorsPolicy");
 
 app.UseCloudEvents();
-//app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapSubscribeHandler();
 

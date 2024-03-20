@@ -26,7 +26,7 @@ public sealed class UploaderModule : IModule
         mapGroup.MapPost("/upload", UploaderEndpoints.HandleUploadAsync)
             .Produces(StatusCodes.Status400BadRequest)
             .WithName("UploadFile")
-            .DisableAntiforgery();
+            .DisableAntiforgery().RequireAuthorization();
     }
 
     public void RegisterModule(WebApplicationBuilder builder)

@@ -52,6 +52,12 @@ static_resources:
                                           route:
                                               prefix_rewrite: "/v1.0/invoke/stats/method/"
                                               cluster: dapr
+                                        - name: "auth"
+                                          match:
+                                              prefix: "/a/"
+                                          route:
+                                              prefix_rewrite: "/v1.0/invoke/auth/method/"
+                                              cluster: dapr
     clusters:
         - name: dapr
           connect_timeout: 0.25s

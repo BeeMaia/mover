@@ -16,7 +16,7 @@ public sealed class WriteStatsHandler : Mover.Shared.Handlers.CommandHandler<Wri
 
     public override async Task HandleAsync(WriteStats command, CancellationToken cancellationToken)
     {
-        await statsService.WriteAsync(command.RawId, command.FileName, cancellationToken);
+        await statsService.WriteAsync(command.RawId, command.FileName, command.UserId, cancellationToken);
 
         await ServiceBus.PublishAsync(new WroteStats(command.RawId), cancellationToken);
     }

@@ -11,6 +11,7 @@ param registryName string
 var appName = 'mover'
 var uploaderSN = 'uploader'
 var statsSN = 'stats'
+var authSN = 'auth'
 var fitdecoderSN = 'fitdecoder'
 var frontendSN = 'frontend'
 var resourceToken = toLower('${appName}${environment}')
@@ -148,6 +149,24 @@ module stats 'api.bicep' = {
   dependsOn:[dapr]
 }
 
+module auth 'api.bicep' = {
+  name: authSN
+  params: {
+    name: '${abbrs.appContainerApps}${authSN}-${resourceToken}'
+    location: location
+    imageName: 'mover-auth:main'
+    containerAppsEnvironmentName: appEnv.outputs.environmentName
+    containerRegistryName: registryName
+    serviceName: authSN
+    managedIdentityName: security.outputs.managedIdentityName
+    applicationInsightsName: monitoring.outputs.applicationInsightsName
+  }
+  dependsOn:[
+    dapr 
+    sqlServer
+  ]
+}
+
 module frontend 'frontend.bicep' = {
   name: frontendSN
   params: {
@@ -185,6 +204,15 @@ module cosmosdb 'cosmos-db.bicep' = {
   }
 }
 
+module sqlServer 'sql-server.bicep' = {
+  name: 'sqlServer'
+  params: {
+    location: location
+    sqlServerName: '${abbrs.sqlServers}${resourceToken}'
+    managedIdentityName: security.outputs.managedIdentityName
+  }
+}
+
 module keyvault 'keyvault.bicep' = {
   name:'keyvault'
   params: {
@@ -192,5 +220,6 @@ module keyvault 'keyvault.bicep' = {
     location: location
     managedIdentityObjectId: security.outputs.managedIdentityObjectId
     moverDbConnString: cosmosdb.outputs.connectionString
+    moverSqlConnString: sqlServer.outputs.identityDbConnectionString
   }
 }

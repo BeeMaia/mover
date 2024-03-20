@@ -22,40 +22,41 @@ public class StatsService : IStatsService
         logger = loggerFactory.CreateLogger(GetType());
     }
 
-    public async Task<IEnumerable<ActivityVM>> GetAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<ActivityVM>> GetAsync(string userId, CancellationToken cancellationToken)
     {
-        var activities = await activityRepository.GetAsync(cancellationToken);
+        var activities = await activityRepository.GetAsync(userId, cancellationToken);
 
         return activities.Select(_ => (ActivityVM)_);
     }
 
     public async Task<ActivityWithCoordinatesVM?> GetByIdRawAsync(string idRaw, CancellationToken cancellationToken)
     {
-        var activity =  await activityRepository.GetAsync(idRaw, cancellationToken);
+        var activity = await activityRepository.GetByIdRawAsync(idRaw, cancellationToken);
         if (activity is null)
             return null;
 
         return (ActivityWithCoordinatesVM)activity;
     }
 
-    public async Task WriteAsync(Guid rawId, string fileName, CancellationToken cancellationToken)
+    public async Task WriteAsync(Guid rawId, string fileName, string userId, CancellationToken cancellationToken)
     {
         logger.LogInformation("Start write stats for file: {fileName}", fileName);
 
         var data = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_GPXBLOB, fileName, cancellationToken);
         var gpx = data.ToGpx();
         var points = gpx?.Trk?.FirstOrDefault()?.Trkseg?.FirstOrDefault()?.Trkpt;
-        var track = BuildTrackEntity(rawId, fileName, gpx, points);
+        var track = BuildTrackEntity(rawId, fileName, userId, gpx, points);
 
         await activityRepository.CreateAsync(track, cancellationToken);
     }
 
-    private static Activity BuildTrackEntity(Guid rawId, string fileName, Gpx? gpx, GpxPoint[]? points)
+    private static Activity BuildTrackEntity(Guid rawId, string fileName, string userId, Gpx? gpx, GpxPoint[]? points)
     {
         var track = new Activity()
         {
             IdRaw = rawId.ToString(),
             FileName = fileName,
+            UserId = userId,
             ActivityType = gpx?.Trk?.FirstOrDefault()?.Type ?? string.Empty,
             Timestamp = gpx?.Metadata?.Time.ToEpoch() ?? DateTime.UtcNow.ToEpoch()
         };

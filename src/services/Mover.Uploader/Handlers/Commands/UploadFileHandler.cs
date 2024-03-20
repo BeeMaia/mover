@@ -21,7 +21,7 @@ public sealed class UploadFileHandler : CommandHandler<UploadFile>
     {
         var content = await blobRepository.GetBlobAsync(Constants.Dapr.MOVER_RAWBLOB, command.FileName, cancellationToken);
 
-        var uploadedEvent = await uploaderService.UploadAsync(command.RawId, command.FileName, content, cancellationToken);
+        var uploadedEvent = await uploaderService.UploadAsync(command.RawId, command.FileName, command.UserId, content, cancellationToken);
         if (uploadedEvent != null)
         {
             await ServiceBus.PublishAsync(uploadedEvent, cancellationToken);
