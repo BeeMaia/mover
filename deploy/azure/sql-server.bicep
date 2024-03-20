@@ -5,7 +5,7 @@ param sqlAdministratorLoginPassword string = 'Pass@word'
 param identityDbName string = 'AuthDb'
 param managedIdentityName string
 
-resource sqlServer 'Microsoft.Sql/servers@2021-05-01-preview' = {
+resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: sqlServerName
   location: location
   properties: {
@@ -14,7 +14,7 @@ resource sqlServer 'Microsoft.Sql/servers@2021-05-01-preview' = {
     administratorLoginPassword: sqlAdministratorLoginPassword
   }
 
-  resource sqlServerFirewall 'firewallRules@2021-05-01-preview' = {
+  resource sqlServerFirewall 'firewallRules@2023-08-01-preview' = {
     name: 'AllowAllWindowsAzureIps'
     properties: {
       // Allow Azure services and resources to access this server
@@ -23,7 +23,7 @@ resource sqlServer 'Microsoft.Sql/servers@2021-05-01-preview' = {
     }
   }
 
-  resource identityDb 'databases@2021-05-01-preview' = {
+  resource identityDb 'databases@2023-08-01-preview' = {
     name: identityDbName
     location: location
     properties: {
@@ -37,7 +37,7 @@ resource sqlServer 'Microsoft.Sql/servers@2021-05-01-preview' = {
   }
 }
 
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2022-01-31-preview' existing = {
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
   name: managedIdentityName
 }
 
