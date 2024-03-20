@@ -162,10 +162,7 @@ module auth 'api.bicep' = {
     managedIdentityName: security.outputs.managedIdentityName
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
-  dependsOn:[
-    dapr 
-    sqlServer
-  ]
+  dependsOn:[dapr]
 }
 
 module frontend 'frontend.bicep' = {
