@@ -1,13 +1,14 @@
 {
-  "profiles": {
-    "Docker Compose": {
-      "commandName": "DockerCompose",
-      "commandVersion": "1.0",
-        "serviceActions": {
-            "mover-fitdecoder": "StartDebugging",
-            "mover-uploader": "StartDebugging",
-            "mover-stats": "StartDebugging"
+    "profiles": {
+        "Docker Compose": {
+            "commandName": "DockerCompose",
+            "commandVersion": "1.0",
+            "serviceActions": {
+                "mover-fitdecoder": "StartDebugging",
+                "mover-uploader": "StartDebugging",
+                "mover-stats": "StartDebugging",
+                "mover-auth": "StartDebugging"
+            }
         }
     }
-  }
 }
